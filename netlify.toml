@@ -1,0 +1,6 @@
+[build]
+  command = "npm install && node generate_config.js"
+  publish = "." # Pastikan ini mengarah ke root project Anda
+
+[functions]
+  directory = "netlify/functions"

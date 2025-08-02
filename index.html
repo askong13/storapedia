@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Storapedia - Solusi Penyimpanan Aman & Modern</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📦</text></svg>">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+    :root {
+        --primary-50: #eff6ff; --primary-100: #dbeafe; --primary-500: #3b82f6; --primary-600: #2563eb; --primary-700: #1d4ed8;
+        --gray-100: #f3f4f6; --gray-200: #e5e7eb; --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-500: #6b7280; --gray-700: #374151; --gray-800: #1f2937; --gray-900: #111827;
+        --red-500: #ef4444; --red-600: #dc2626; --yellow-400: #facc15; --yellow-100: #fef9c3; --yellow-800: #854d0e;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:Inter,sans-serif;color:var(--dark-text);background-color:#fff}
+    .btn-primary{background-color:var(--primary-600);color:#fff;transition:all .3s ease;box-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1)}.btn-primary:hover:not(:disabled){background-color:var(--primary-700);transform:translateY(-2px);box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1)}.btn-primary:disabled{background-color:#94a3b8;cursor:not-allowed}
+    .btn-secondary{background-color:transparent;color:var(--gray-700);border:1px solid var(--gray-300);transition:all .2s ease}.btn-secondary:hover{background-color:var(--gray-100);border-color:var(--gray-400)}
+    .section{display:none}.section.active{display:block;animation:fadeIn .8s}
+    .location-card{transition:transform .3s,box-shadow .3s,border-color .3s}.location-card.highlighted{transform:scale(1.02);box-shadow:0 0 0 3px var(--primary-500);border-color:var(--primary-500)}
+    .location-card-image{width:100%;height:180px;object-fit:cover;border-radius:6px 6px 0 0}
+    .skeleton{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes pulse{50%{opacity:.5}}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    
+    .pac-container {
+        z-index: 99999 !important; border-radius: 8px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--gray-200); font-family: Inter, sans-serif;
+    }
+    .pac-item { padding: 12px 16px; font-size: 15px; border: none; cursor: pointer; }
+    .pac-item:hover { background-color: var(--primary-50); }
+    .pac-item-query { font-weight: 600; color: var(--gray-800); }
+    .pac-icon { display: none; }
+    .pac-item:before {
+        content: "\f3c5"; font-family: "Font Awesome 6 Free"; font-weight: 900;
+        margin-right: 12px; color: var(--primary-500);
+    }
+
+    .booking-step{display:none}.booking-step.active{display:block;animation:fadeIn .5s}
+    input[type=radio]:checked+span{border-color:var(--primary-500);background-color:var(--primary-50);color:var(--primary-600);font-weight:600}
+    .notification-badge{position:absolute;top:-8px;right:-8px;background-color:var(--red-500);color:#fff;border-radius:50%;width:20px;height:20px;font-size:.65rem;font-weight:700;border:2px solid white;display:none;align-items:center;justify-content:center;}
+    .swal2-container { z-index: 9999 !important; }
+    .rating-stars .fa-star { color: var(--gray-300); }
+    .rating-stars .fa-star.filled { color: var(--yellow-400); }
+    .faq-answer {transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out; max-height: 0; padding-top: 0; padding-bottom: 0; overflow: hidden;}
+    #chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
+    #chat-bubble { position:relative; width: 60px; height: 60px; background-color: var(--primary-600); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s; }
+    #chat-bubble:hover { transform: scale(1.1); background-color: var(--primary-700); }
+    #chat-notification-badge { position: absolute; top: -2px; right: -2px; background-color: var(--red-600); color: white; border-radius: 50%; width: 22px; height: 22px; font-size: 12px; font-weight: bold; border: 2px solid white; display: none; align-items: center; justify-content: center; }
+    #chat-window { position: fixed; bottom: 90px; right: 20px; width: 350px; height: 450px; background-color: white; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden; animation: slideUp 0.5s; z-index: 1000;}
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    #chat-header { background-color: var(--primary-600); color: white; padding: 1rem; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    #chat-messages { flex-grow: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem; }
+    .chat-message { padding: 0.5rem 1rem; border-radius: 18px; max-width: 80%; word-wrap: break-word; }
+    .chat-message.admin { background-color: var(--gray-200); color: var(--gray-800); align-self: flex-start; }
+    .chat-message.user { background-color: var(--primary-500); color: white; align-self: flex-end; }
+    #chat-form { display: flex; padding: 0.75rem; border-top: 1px solid var(--gray-200); gap: 0.5rem; }
+    #chat-input { flex-grow: 1; border: 1px solid var(--gray-300); padding: 0.5rem 1rem; border-radius: 20px; font-size: 14px; outline:none; }
+    #chat-input:focus { border-color: var(--primary-500); }
+    #chat-send-btn { background-color: var(--primary-600); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 16px; flex-shrink: 0; cursor:pointer; }
+    .hidden { display: none !important; }
+
+    .voucher-slider-wrapper { position: relative; }
+    .voucher-slider-btn {
+        position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(255,255,255,0.8);
+        border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.15); cursor: pointer; transition: all 0.2s; z-index: 10;
+    }
+    .voucher-slider-btn:hover { background-color: white; transform: translateY(-50%) scale(1.1); }
+    #voucher-prev-btn { left: -20px; }
+    #voucher-next-btn { right: -20px; }
+    #vouchers-container {
+        display: flex; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory;
+        padding-bottom: 1rem; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none;
+    }
+    #vouchers-container::-webkit-scrollbar { display: none; }
+    #vouchers-container > div {
+        flex: 0 0 90%; scroll-snap-align: start;
+    }
+    @media (min-width: 768px) { #vouchers-container > div { flex-basis: 45%; } }
+    @media (min-width: 1024px) { #vouchers-container > div { flex-basis: 31%; } }
+
+    </style>
+
+</head>
+<body class="bg-gray-100">
+    <header id="header" class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-40">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="#" class="text-3xl font-extrabold text-primary-600 tracking-tighter nav-link" data-target="home">STORAPEDIA</a>
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="#locations" class="text-gray-600 hover:text-primary-600 font-medium nav-link" data-target="locations">Locations</a>
+                <a href="#how-it-works" class="text-gray-600 hover:text-primary-600 font-medium nav-link" data-target="how-it-works">How It Works</a>
+                <a href="#vouchers" class="text-gray-600 hover:text-primary-600 font-medium nav-link" data-target="vouchers">Vouchers</a>
+                <a href="#faq" class="text-gray-600 hover:text-primary-600 font-medium nav-link" data-target="faq">FAQ</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div id="notification-area" class="relative hidden">
+                    <button id="notification-button" class="text-gray-600 hover:text-primary-600 text-2xl relative">
+                        <i class="fas fa-bell"></i>
+                        <span id="notification-count" class="notification-badge">0</span>
+                    </button>
+                    <div id="notification-popup" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-md shadow-xl z-50 border border-gray-100 p-4 max-h-[400px] overflow-y-auto">
+                        <div class="flex justify-between items-center mb-2">
+                           <h3 class="font-bold text-lg">Notifications</h3>
+                           <button id="mark-all-read-btn" class="text-xs text-blue-500 hover:underline">Mark all as read</button>
+                        </div>
+                        <div id="notification-list" class="space-y-3"><p class="text-gray-500 text-sm">No new notifications.</p></div>
+                    </div>
+                </div>
+                <div id="auth-links" class="md:flex items-center space-x-4"><button id="login-btn" class="text-gray-600 font-semibold hover:text-primary-600 px-4 py-2">Login</button> <button id="signup-btn" class="btn-primary font-semibold px-5 py-2 rounded-lg">Sign Up</button></div>
+                <div id="user-menu" class="hidden relative"><button id="user-menu-button" class="flex items-center space-x-2"><span id="user-greeting" class="font-semibold text-gray-700 hidden sm:block"></span><div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center"><i class="fas fa-user text-gray-500"></i></div></button>
+                    <div id="user-menu-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-xl z-50 py-1 border border-gray-100"><a href="#" id="dashboard-btn" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><i class="fas fa-tachometer-alt fa-fw mr-2"></i>Dashboard</a> <a href="#" id="logout-btn" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><i class="fas fa-sign-out-alt fa-fw mr-2"></i>Logout</a></div>
+                </div>
+                <div class="lg:hidden"><button id="mobile-menu-button" class="text-gray-600 hover:text-primary-600 text-2xl"><i class="fas fa-bars"></i></button></div>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-200">
+            <a href="#locations" class="block py-3 px-4 text-gray-600 hover:bg-gray-50 hover:text-primary-600 font-medium nav-link" data-target="locations">Locations</a>
+            <a href="#how-it-works" class="block py-3 px-4 text-gray-600 hover:bg-gray-50 hover:text-primary-600 font-medium nav-link" data-target="how-it-works">How It Works</a>
+            <a href="#vouchers" class="block py-3 px-4 text-gray-600 hover:bg-gray-50 hover:text-primary-600 font-medium nav-link" data-target="vouchers">Vouchers</a>
+            <a href="#faq" class="block py-3 px-4 text-gray-600 hover:bg-gray-50 hover:text-primary-600 font-medium nav-link" data-target="faq">FAQ</a>
+            <div id="mobile-auth-links" class="border-t border-gray-200 p-4 space-y-3"><button id="mobile-login-btn" class="w-full text-center text-gray-600 font-semibold hover:text-primary-600 px-4 py-2 rounded-lg border border-gray-300">Login</button> <button id="mobile-signup-btn" class="w-full btn-primary font-semibold px-5 py-2 rounded-lg">Sign Up</button></div>
+        </div>
+    </header>
+    <main>
+        <div id="main-content" class="section active">
+            <section id="home" class="relative overflow-hidden bg-white bg-cover bg-center" style="background-image: url('https://placehold.co/1920x1080/e2e8f0/64748b?text=Loading...')">
+                <div class="absolute inset-0 bg-black/50"></div>
+                <div class="relative container mx-auto px-4 sm:px-6 lg:px-8 py-32 md:py-40 lg:py-48 text-center text-white">
+                    <h1 id="home-title" class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tighter">Secure, Simple, Smart Storage.</h1>
+                    <p id="home-subtitle" class="mt-4 text-lg md:text-xl text-gray-200 max-w-3xl mx-auto">Find affordable and accessible self-storage units near you. Book online in minutes.</p>
+                    <div class="mt-10"><a href="#locations" class="btn-primary font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 nav-link" data-target="locations">Find Storage Now</a></div>
+                </div>
+            </section>
+            
+            <section id="how-it-works" class="py-20 bg-gray-50">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl font-bold text-center mb-16">How It Works in 3 Easy Steps</h2>
+                    <div class="grid md:grid-cols-3 gap-10 text-center relative">
+                        <div class="hidden md:block absolute top-1/2 left-0 w-full h-px"><svg width="100%" height="2"><line x1="0" y1="1" x2="100%" y2="1" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="8 8"/></svg></div>
+                        <div class="flex flex-col items-center z-10"><div class="bg-white border-2 border-primary-500 text-primary-500 w-24 h-24 rounded-full flex items-center justify-center text-4xl mb-5 shadow-lg"><i class="fas fa-map-marked-alt"></i></div><h3 class="text-xl font-bold mb-2">1. Find & Compare</h3><p class="text-gray-600">Use your location to find the nearest units. Compare prices, photos, and features easily.</p></div>
+                        <div class="flex flex-col items-center z-10"><div class="bg-white border-2 border-primary-500 text-primary-500 w-24 h-24 rounded-full flex items-center justify-center text-4xl mb-5 shadow-lg"><i class="fas fa-calendar-check"></i></div><h3 class="text-xl font-bold mb-2">2. Book & Pay</h3><p class="text-gray-600">Select your unit, dates, and pay securely online or on site.</p></div>
+                        <div class="flex flex-col items-center z-10"><div class="bg-white border-2 border-primary-500 text-primary-500 w-24 h-24 rounded-full flex items-center justify-center text-4xl mb-5 shadow-lg"><i class="fas fa-key"></i></div><h3 class="text-xl font-bold mb-2">3. Move In</h3><p class="text-gray-600">Check-in via your dashboard, get your access code, and move in. It's that simple.</p></div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="vouchers" class="py-20 bg-white">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl font-bold text-center mb-4">Special Offers & Vouchers</h2>
+                    <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Use these codes at checkout to get amazing discounts on your storage.</p>
+                    <div class="voucher-slider-wrapper">
+                        <div id="vouchers-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                        <div id="voucher-prev-btn" class="voucher-slider-btn hidden md:flex"><i class="fas fa-chevron-left"></i></div>
+                        <div id="voucher-next-btn" class="voucher-slider-btn hidden md:flex"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="locations" class="py-20 bg-gray-50">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl font-bold text-center mb-4">Our Storage Locations</h2>
+                    <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">We're finding the best storage locations near you, sorted by distance with available units.</p>
+                    
+                    <div class="mb-8 flex flex-col sm:flex-row gap-4"><div class="relative flex-grow"><input id="location-search-input" placeholder="Enter an address or landmark..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition"> <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i></div><button id="use-my-location-btn" class="btn-primary px-5 py-3 rounded-lg font-semibold flex items-center justify-center gap-2"><i id="location-btn-icon" class="fas fa-location-arrow"></i> <span id="location-btn-text">Use My Location</span></button></div>
+                    
+                    <div id="filters-section" class="mb-8 bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="font-semibold text-gray-700 block mb-2">Filter by Features</label>
+                                <div id="feature-filters-container" class="flex flex-wrap gap-x-4 gap-y-2">
+                                    <p class="text-gray-500 text-sm">Loading features...</p>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="distance-slider" class="font-semibold text-gray-700 block mb-2">Distance from me: <span id="distance-value" class="font-bold text-primary-600">any</span></label>
+                                <input type="range" id="distance-slider" min="0" max="100" value="100" class="w-full accent-primary-500" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-1 h-[600px] overflow-y-auto pr-2 space-y-4">
+                            <div id="location-list-skeleton"><div class="bg-white p-4 rounded-lg border border-gray-200 space-y-3 skeleton"><div class="h-40 bg-gray-200 rounded-t-lg"></div><div class="p-4 space-y-3"><div class="h-5 bg-gray-200 rounded w-3/4"></div><div class="h-4 bg-gray-200 rounded w-full"></div><div class="h-4 bg-gray-200 rounded w-1/2"></div></div></div><div class="bg-white p-4 rounded-lg border border-gray-200 space-y-3 skeleton mt-4"><div class="h-40 bg-gray-200 rounded-t-lg"></div><div class="p-4 space-y-3"><div class="h-5 bg-gray-200 rounded w-3/4"></div><div class="h-4 bg-gray-200 rounded w-full"></div><div class="h-4 bg-gray-200 rounded w-1/2"></div></div></div></div>
+                            <div id="locations-list-container" class="space-y-4"></div>
+                        </div>
+                        <div class="lg:col-span-2 rounded-lg shadow-xl overflow-hidden min-h-[400px] lg:h-[600px] bg-gray-200">
+                            <div id="map" style="height:100%;width:100%"><div class="flex items-center justify-center h-full"><p class="text-gray-500">Loading map...</p></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="testimonials" class="py-20 bg-white">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
+                    <div id="testimonials-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                </div>
+            </section>
+            
+            <section id="faq" class="py-20 bg-gray-50">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+                    <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+                    <div id="faq-container" class="space-y-4"></div>
+                </div>
+            </section>
+            
+            <footer class="bg-gray-800 text-gray-300">
+                <div class="container mx-auto px-6 py-12">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                        <div><a href="#" class="text-3xl font-extrabold text-primary-500 tracking-tighter nav-link" data-target="home">STORAPEDIA</a><p class="mt-4 text-gray-400 max-w-xs mx-auto md:mx-0">Your trusted partner for secure, simple, and smart storage solutions across the nation.</p><div class="mt-6 flex justify-center md:justify-start space-x-5" id="footer-social-media"></div></div>
+                        <div class="md:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-8" id="footer-links-container"></div>
+                    </div>
+                    <div class="mt-12 pt-8 border-t border-gray-700 text-center text-gray-500"><p>&copy; <span id="copyright-year"></span> Storapedia. All Rights Reserved.</p></div>
+                </div>
+            </footer>
+        </div>
+        
+        <div id="user-dashboard" class="section container mx-auto px-4 sm:px-6 lg:px-8 py-12 min-h-screen">
+            <h1 class="text-4xl font-bold mb-8">My Dashboard</h1>
+            <div id="dashboard-content-loader" class="text-center py-10"><i class="fas fa-spinner fa-spin text-4xl text-primary-500"></i><p class="mt-4 text-gray-600">Loading your dashboard...</p></div>
+            <div id="dashboard-content" class="hidden grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2"><h2 class="text-2xl font-semibold mb-4">My Bookings</h2><div id="bookings-list" class="space-y-6"></div></div>
+                <div class="lg:col-span-1"><div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 sticky top-28"><h2 class="text-2xl font-semibold mb-4">My Profile</h2><div id="profile-details" class="space-y-3"></div><div class="flex flex-col space-y-3 mt-6"><button id="edit-profile-btn" class="w-full text-primary-600 font-semibold py-2 px-4 rounded-lg border-2 border-primary-600 hover:bg-primary-600 hover:text-white transition"><i class="fas fa-edit mr-2"></i>Edit Profile</button><button id="change-password-btn" class="w-full text-gray-600 font-semibold py-2 px-4 rounded-lg border-2 border-gray-300 hover:bg-gray-100 hover:text-gray-800 transition"><i class="fas fa-key mr-2"></i>Change Password</button></div></div></div>
+            </div>
+        </div>
+    </main>
+    
+    <div id="chat-widget"><div id="chat-window"><div id="chat-header"><span>Chat with Admin</span><button id="close-chat-btn" class="text-white text-2xl font-bold">&times;</button></div><div id="chat-messages"><div class="chat-message admin">Hello! How can we help you today?</div></div><form id="chat-form"><input id="chat-input" type="text" placeholder="Type your message..." autocomplete="off" required><button id="chat-send-btn" type="submit"><i class="fas fa-paper-plane"></i></button></form></div><div id="chat-bubble"><i class="fas fa-comments"></i><span id="chat-notification-badge">0</span></div></div>
+
+    <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white w-full max-w-md p-8 rounded-xl shadow-2xl relative transform transition-all" id="auth-modal-content"><button id="close-auth-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 text-2xl">&times;</button>
+            <h2 id="auth-title" class="text-2xl font-bold text-center mb-6">Login</h2>
+            <form id="auth-form" class="space-y-4"><input type="hidden" id="auth-mode" value="login"><div id="name-field-container" class="hidden"><label for="auth-name" class="block text-sm font-medium text-gray-700">Full Name</label> <input id="auth-name" name="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"></div><div id="phone-field-container" class="hidden"><label for="auth-phone" class="block text-sm font-medium text-gray-700">Phone Number</label> <input id="auth-phone" name="phone" type="tel" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"></div><div><label for="auth-email" class="block text-sm font-medium text-gray-700">Email Address</label> <input id="auth-email" name="email" type="email" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"></div><div><label for="auth-password" class="block text-sm font-medium text-gray-700">Password</label> <input id="auth-password" name="password" type="password" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"></div><div><button type="submit" id="auth-submit-btn" class="w-full flex justify-center py-3 px-4 mt-2 border border-transparent rounded-md shadow-sm text-base font-medium btn-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-700">Login</button></div></form>
+             <div class="relative flex py-4 items-center"><div class="flex-grow border-t border-gray-300"></div><span class="flex-shrink mx-4 text-gray-400 text-sm">OR</span><div class="flex-grow border-t border-gray-300"></div></div>
+            <button id="google-signin-btn" class="w-full flex justify-center items-center py-2 px-4 border rounded-md shadow-sm text-base font-medium btn-google"><img class="w-5 h-5 mr-2" src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google icon">Sign In with Google</button>
+            <p id="auth-toggle-text" class="mt-6 text-center text-sm text-gray-600">Don't have an account? <button id="auth-toggle-btn" class="font-medium text-primary-600 hover:text-primary-700">Sign Up</button></p>
+        </div>
+    </div>
+    
+    <div id="booking-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-[51] p-4">
+        <div class="bg-white w-full max-w-2xl rounded-xl shadow-2xl relative transform transition-all flex flex-col max-h-[90vh]"><div class="p-6 border-b border-gray-200"><button id="close-booking-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 text-2xl">&times;</button><h2 class="text-2xl font-bold mb-1"><span id="booking-modal-title">Book Your Unit</span></h2><p id="booking-location-name" class="text-gray-500"></p></div><div class="p-6 sm:p-8 flex-grow overflow-y-auto"><form id="booking-form" class="space-y-4"><input type="hidden" id="booking-location-id"> <input type="hidden" id="booking-booking-id"><div id="booking-step-1" class="booking-step active space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div><label for="booking-storage-type" class="block text-sm font-medium text-gray-700">1. Select Storage Type</label><select id="booking-storage-type" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"></select></div>
+                <div><label for="booking-package" class="block text-sm font-medium text-gray-700">2. Select Package</label><select id="booking-package" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"></select></div>
+            </div>
+
+            <div id="booking-dates-container">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div><label for="booking-start-date" class="block text-sm font-medium text-gray-700">3. Select Start Date</label> <input id="booking-start-date" type="date" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"></div>
+                    <div><label for="booking-start-time" class="block text-sm font-medium text-gray-700">Select Start Time</label> <input id="booking-start-time" type="time" value="09:00" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"></div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                    <div><label for="booking-end-date" class="block text-sm font-medium text-gray-700">End Date</label> <input id="booking-end-date" type="date" readonly class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"></div>
+                    <div><label for="booking-end-time" class="block text-sm font-medium text-gray-700">End Time</label> <input id="booking-end-time" type="time" value="17:00" readonly class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed"></div>
+                </div>
+            </div>
+            
+            <div id="booking-service-options">
+                <label class="block text-sm font-medium text-gray-700">4. Choose Service Option</label>
+                <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <label><input type="radio" name="service-option" value="self-dropoff" class="sr-only" checked> <span class="border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium cursor-pointer transition-all duration-200"><i class="fas fa-people-carry-box mr-2"></i>I'll Move In Myself</span></label>
+                    <label><input type="radio" name="service-option" value="pickup" class="sr-only"> <span class="border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium cursor-pointer transition-all duration-200"><i class="fas fa-truck mr-2"></i>Schedule Pickup (<span id="pickup-fee-display"></span>)</span></label>
+                </div>
+            </div>
+        </div>
+        
+        <div id="booking-step-2" class="booking-step space-y-4">
+            <h3 class="text-lg font-semibold">Pickup Details</h3>
+            <p class="text-sm bg-yellow-100 text-yellow-800 p-3 rounded-md">Pickup service adds a flat fee of <strong id="pickup-fee-display-large"></strong>. Please provide your address.</p><div><label for="pickup-address-input" class="block text-sm font-medium text-gray-700">Find Address or Drag Pin</label><div class="relative"><input id="pickup-address-input" placeholder="Start typing your address..." class="mt-1 block w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"> <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i></div></div><div id="pickup-map-container" class="w-full h-64 bg-gray-200 rounded-lg shadow-inner overflow-hidden relative"><div id="pickup-map" class="w-full h-full"></div><button type="button" id="pickup-detect-location" class="absolute bottom-3 right-3 bg-white p-2 rounded-full shadow-lg text-gray-600 hover:text-primary-600" title="Detect my location"><i class="fas fa-location-crosshairs text-lg"></i></button></div>
+        </div>
+        
+        <div id="booking-step-3" class="booking-step space-y-6">
+            <div id="guest-booking-details" class="hidden space-y-4 bg-blue-50 p-4 rounded-lg border border-blue-200">
+                <h3 class="text-lg font-semibold text-blue-900">One Last Step! Create an Account</h3>
+                <p class="text-sm font-medium text-blue-800">Please provide your details to continue. An account will be created for you automatically to manage your bookings.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div><label for="booking-name" class="block text-sm font-medium text-gray-700">Full Name</label> <input id="booking-name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"></div>
+                    <div><label for="booking-phone" class="block text-sm font-medium text-gray-700">Phone Number</label> <input id="booking-phone" type="tel" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"></div>
+                </div>
+                <div><label for="booking-email" class="block text-sm font-medium text-gray-700">Email Address</label> <input id="booking-email" type="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"></div>
+                <div><label for="booking-password" class="block text-sm font-medium text-gray-700">Create Password</label> <input id="booking-password" type="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"></div>
+                <div class="relative flex py-2 items-center"><div class="flex-grow border-t border-gray-300"></div><span class="flex-shrink mx-4 text-gray-400 text-xs">OR</span><div class="flex-grow border-t border-gray-300"></div></div>
+                <button type="button" id="booking-google-signin-btn" class="w-full flex justify-center items-center py-2 px-4 border rounded-md shadow-sm text-base font-medium btn-google"><img class="w-5 h-5 mr-2" src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google icon">Sign Up with Google</button>
+            </div>
+            <div id="booking-summary" class="space-y-2">
+                <h3 class="text-lg font-semibold">Booking Summary</h3>
+                <div class="flex justify-between text-gray-600"><span>Storage (<span id="summary-package-name">Package</span>)</span><span id="summary-storage-cost">Rp 0</span></div>
+                <div id="summary-pickup-row" class="hidden flex justify-between text-gray-600"><span>Pickup Service</span><span id="summary-pickup-cost">Rp 0</span></div>
+                <div class="flex justify-between font-bold text-xl text-gray-800 border-t pt-2 mt-2"><span>Total Price</span><span id="summary-total-price">Rp 0</span></div>
+            </div>
+            <div class="border-t pt-5">
+                <label class="block text-lg font-semibold text-gray-700">Payment Method</label>
+                <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <label><input type="radio" name="payment-option" value="online" class="sr-only" checked> <span class="border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium cursor-pointer transition-all duration-200"><i class="fas fa-credit-card mr-2"></i>Pay Now (Online)</span></label>
+                    <label><input type="radio" name="payment-option" value="unpaid_on_site" class="sr-only"> <span class="border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium cursor-pointer transition-all duration-200"><i class="fas fa-cash-register mr-2"></i>Pay on Site</span></label>
+                </div>
+            </div>
+        </div></form></div><div class="p-6 bg-gray-50 border-t border-gray-200 flex items-center justify-between"><button id="booking-back-btn" class="font-semibold text-gray-600 hover:text-gray-900 px-4 py-2 rounded-lg">Back</button> <button id="booking-next-btn" class="btn-primary font-semibold px-8 py-2 rounded-lg text-lg">Next</button></div></div>
+    </div>
+    
+    <div id="qr-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-[51] p-4"><div class="bg-white w-full max-w-sm p-8 rounded-xl shadow-2xl relative"><button id="close-qr-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 text-2xl">&times;</button><h2 class="text-2xl font-bold text-center mb-6">Your Booking QR Code</h2><div class="flex justify-center mb-6"><canvas id="qrcode-canvas" class="w-48 h-48 border border-gray-300 rounded-lg"></canvas></div><p class="text-center text-gray-600">Scan this QR code at the facility for quick access to your unit.</p></div></div>
+    
+    <script>
+        // Placeholder function to prevent race condition error.
+        function initMap() {}
+    </script>
+    
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADCv-AX09lIYq6Gr7Gm56rChp4kS0J08Q
+&libraries=places,geometry&callback=initMap"></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+ // --- START OF SCRIPT ---
+
+    // =====================================================================
+    // CRITICAL: GANTI KONFIGURASI INI DENGAN MILIK ANDA DARI FIREBASE
+    // =====================================================================
+    const firebaseConfig = {
+        apiKey: "AIzaSyBeX6K3ejM-zu755LVDDMwgxBi-KW-ogx4",
+        authDomain: "storapedia.firebaseapp.com",
+        projectId: "storapedia",
+        storageBucket: "storapedia.appspot.com",
+        messagingSenderId: "145464021088",
+        appId: "1:145464021088:web:1e24a2847994ac5003f305",
+        databaseURL: "https://storapedia-default-rtdb.firebaseio.com/"
+    };
+
+    // Initialize Firebase
+    try {
+        if (!firebaseConfig.apiKey || firebaseConfig.apiKey === "YOUR_FIREBASE_API_KEY") {
+            throw new Error("Firebase configuration is missing. Please replace placeholders with your actual Firebase project config.");
+        }
+        firebase.initializeApp(firebaseConfig);
+    } catch(e) {
+        console.error("Firebase initialization failed. Please check your firebaseConfig.", e);
+        document.body.innerHTML = `<div style="padding: 40px; text-align: center; font-family: sans-serif; background-color: #ffebee; color: #c62828;"><h1>Configuration Error</h1><p>Could not connect to the database. Please check the Firebase configuration in the script.</p></div>`;
+    }
+
+    const db = firebase.database();
+    const auth = firebase.auth();
+    
+    let map, infoWindow, mainAutocomplete, geocoder;
+    let currentUser = null, userProfile = null, userLocation = null;
+    let locationsCache = [], userBookingsCache = [], markers = [];
+    let currentBookingStep = 1;
+    let pickupMap, pickupMarker, pickupAutocomplete;
+    let pickupFee = 150000;
+    const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 });
+    const notificationSound = new Audio('data:audio/mpeg;base64,SUQzBA...');
+    let chatListener = null;
+    let unreadChatCount = 0;
+    let lastNotificationCount = 0;
+    let hasInteracted = false;
+
+    document.addEventListener('DOMContentLoaded', initApp);
+
+    async function initApp() {
+        if (typeof firebase === 'undefined') return;
+        document.body.addEventListener('click', () => { hasInteracted = true; }, { once: true });
+        
+        await loadDynamicContent();
+        await fetchAndDisplayLocations(); 
+        
+        setupEventListeners();
+        updateCopyrightYear();
+        handleAuthStateChange();
+        initChatWidget();
+    }
+
+    window.initMap = function() {
+        const defaultCenter = { lat: -8.409518, lng: 115.188919 };
+        try {
+            if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+                throw new Error("Google Maps script did not load correctly. Please check your API key and ensure it is enabled and correctly restricted in the Google Cloud Console.");
+            }
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: defaultCenter, zoom: 10, mapTypeControl: false, streetViewControl: false, fullscreenControl: false, gestureHandling: 'greedy',
+                styles: [{"featureType":"water","elementType":"geometry","stylers":[{"color":"#e9e9e9"},{"lightness":17}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#ffffff"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":16}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":21}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#dedede"},{"lightness":21}]},{"elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"lightness":16}]},{"elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#333333"},{"lightness":40}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#f2f2f2"},{"lightness":19}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#fefefe"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#fefefe"},{"lightness":17},{"weight":1.2}]}]
+            });
+            infoWindow = new google.maps.InfoWindow();
+            geocoder = new google.maps.Geocoder();
+            const searchInput = document.getElementById('location-search-input');
+            mainAutocomplete = new google.maps.places.Autocomplete(searchInput, { fields: ["geometry", "name", "formatted_address"], types: ["geocode"] });
+            mainAutocomplete.addListener('place_changed', onPlaceChanged);
+
+            renderMapMarkers(locationsCache); 
+            locateUser(true);
+
+        } catch(e) {
+            console.error("Google Maps initialization failed:", e);
+            document.getElementById('map').innerHTML = `<div class="flex items-center justify-center h-full p-4 bg-red-100 rounded-lg"><p class="text-red-700 font-bold text-center">Error: Peta tidak dapat dimuat. Pastikan Kunci API Google Maps Anda benar dan telah diaktifkan di Google Cloud Console.</p></div>`;
+        }
+    }
+    
+    // --- Data Fetching & Content Population ---
+    async function loadDynamicContent() {
+        try {
+            const settingsSnapshot = await db.ref('settings').once('value');
+            if (settingsSnapshot.exists()) {
+                const settings = settingsSnapshot.val();
+                if (settings.banner) populateHomepageHero(settings.banner);
+                if (settings.footerLinks) populateFooterLinks(settings.footerLinks);
+                if (settings.social_media) populateSocialMedia(settings.social_media);
+                if (settings.pricing?.pickupFee) pickupFee = settings.pricing.pickupFee;
+            }
+            await Promise.all([
+                fetchAndDisplayVouchers(),
+                fetchAndDisplayTestimonials(),
+                populateFAQ()
+            ]);
+        } catch (error) {
+            console.error("Error loading initial content:", error);
+            Swal.fire('Connection Error', 'Could not load initial content from the database. Please check your connection and the Firebase configuration.', 'error');
+        }
+    }
+    
+    function populateHomepageHero(bannerData) {
+        if(bannerData.imageUrl) document.getElementById('home').style.backgroundImage = `url('${bannerData.imageUrl}')`;
+        if(bannerData.title) document.getElementById('home-title').textContent = bannerData.title;
+        if(bannerData.subtitle) document.getElementById('home-subtitle').textContent = bannerData.subtitle;
+    }
+    
+    async function fetchAndDisplayVouchers() {
+        const container = document.getElementById('vouchers-container');
+        try {
+            const snapshot = await db.ref('vouchers').orderByChild('active').equalTo(true).once('value');
+            if (!snapshot.exists()) {
+                container.innerHTML = '<p class="text-center text-gray-500 col-span-full">No active vouchers at the moment.</p>';
+                return;
+            }
+            container.innerHTML = ''; // Clear previous content
+            snapshot.forEach(child => {
+                const voucher = child.val();
+                const voucherEl = document.createElement('div');
+                voucherEl.className = "bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300";
+                voucherEl.innerHTML = `
+                    <img src="${voucher.imageUrl || 'https://placehold.co/400x240/e2e8f0/64748b?text=Offer'}" alt="${voucher.code}" class="w-full h-48 object-cover">
+                    <div class="p-6 text-center">
+                        <p class="text-lg font-semibold text-gray-800">Get ${voucher.discount_percent}% OFF</p>
+                        <p class="text-sm text-gray-500 mt-1">Use code at checkout:</p>
+                        <div class="flex items-center justify-center gap-2 mt-2">
+                            <p class="font-mono text-xl font-bold text-primary-600 bg-primary-50 px-4 py-2 rounded-lg inline-block">${voucher.code}</p>
+                            <button class="copy-voucher-btn text-gray-500 hover:text-primary-600" data-code="${voucher.code}" title="Copy code">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>`;
+                container.appendChild(voucherEl);
+            });
+            setupVoucherSlider();
+        } catch (error) {
+            console.error("Error fetching vouchers:", error);
+            container.innerHTML = '<p class="text-center text-red-500 col-span-full">Could not load vouchers.</p>';
+        }
+    }
+
+    function setupVoucherSlider() {
+        const container = document.getElementById('vouchers-container');
+        const nextBtn = document.getElementById('voucher-next-btn');
+        const prevBtn = document.getElementById('voucher-prev-btn');
+
+        nextBtn.addEventListener('click', () => {
+            container.scrollBy({ left: container.clientWidth * 0.8, behavior: 'smooth' });
+        });
+        prevBtn.addEventListener('click', () => {
+            container.scrollBy({ left: -container.clientWidth * 0.8, behavior: 'smooth' });
+        });
+
+        document.querySelectorAll('.copy-voucher-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const button = e.currentTarget;
+                const code = button.dataset.code;
+                navigator.clipboard.writeText(code).then(() => {
+                    const originalIcon = button.innerHTML;
+                    button.innerHTML = `<i class="fas fa-check text-green-500"></i>`;
+                    button.disabled = true;
+                    setTimeout(() => { 
+                        button.innerHTML = originalIcon; 
+                        button.disabled = false;
+                    }, 2000);
+                }).catch(err => console.error('Failed to copy: ', err));
+            });
+        });
+    }
+
+    // --- Locations & Filtering Logic ---
+    async function fetchAndDisplayLocations() {
+        const skeleton = document.getElementById('location-list-skeleton');
+        skeleton.style.display = 'block';
+        try {
+            const snapshot = await db.ref('storageLocations').once('value');
+            locationsCache = [];
+            if (snapshot.exists()) {
+                snapshot.forEach(child => {
+                    const loc = child.val();
+                    if (loc.name && loc.geolocation) {
+                        locationsCache.push({ id: child.key, ...loc });
+                    }
+                });
+            }
+            populateFeatureFilters();
+            applyFiltersAndRender();
+        } catch (error) {
+            console.error("Error fetching locations: ", error);
+            document.getElementById('locations-list-container').innerHTML = `<p class="text-center text-red-500 p-4">Error: Could not fetch locations from the database.</p>`;
+        } finally {
+            skeleton.style.display = 'none';
+        }
+    }
+
+    function applyFiltersAndRender() {
+        if (userLocation) {
+            locationsCache.forEach(loc => {
+                loc.distance = haversineDistance(userLocation, { lat: loc.geolocation.latitude, lng: loc.geolocation.longitude });
+            });
+        } else {
+            locationsCache.forEach(loc => { loc.distance = null; });
+        }
+
+        const selectedFeatures = Array.from(document.querySelectorAll('#feature-filters-container input:checked')).map(cb => cb.value);
+        const maxDistance = parseFloat(document.getElementById('distance-slider').value);
+
+        const filteredLocations = locationsCache.filter(loc => {
+            if ((loc.capacity || 0) <= 0) return false;
+
+            const isWithinDistance = userLocation ? loc.distance <= maxDistance : true;
+            if (!isWithinDistance && maxDistance < 100) return false;
+
+            const hasAllFeatures = selectedFeatures.every(featureName => 
+                loc.features && loc.features.some(f => f.name === featureName)
+            );
+            if (!hasAllFeatures) return false;
+
+            return true;
+        });
+
+        if (userLocation) {
+            filteredLocations.sort((a, b) => a.distance - b.distance);
+        }
+
+        renderLocationList(filteredLocations);
+        renderMapMarkers(filteredLocations);
+    }
+    
+    function populateFeatureFilters() {
+        const features = new Set();
+        locationsCache.forEach(loc => {
+            if (loc.features && Array.isArray(loc.features)) {
+                loc.features.forEach(f => features.add(f.name));
+            }
+        });
+
+        const container = document.getElementById('feature-filters-container');
+        if (features.size === 0) {
+            container.innerHTML = `<p class="text-gray-500 text-sm">No specific features available for filtering.</p>`;
+            return;
+        }
+
+        container.innerHTML = Array.from(features).sort().map(feature => `
+            <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="checkbox" value="${feature}" class="rounded text-primary-600 focus:ring-primary-500">
+                <span class="text-sm text-gray-700">${feature}</span>
+            </label>
+        `).join('');
+
+        container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            cb.addEventListener('change', applyFiltersAndRender);
+        });
+    }
+    
+    function renderLocationList(locations) {
+        const listContainer = document.getElementById('locations-list-container');
+        listContainer.innerHTML = '';
+        if (locations.length === 0) {
+            listContainer.innerHTML = `<div class="text-center bg-white p-8 rounded-lg"><i class="fas fa-search-location text-4xl text-gray-400 mb-4"></i><h3 class="font-semibold text-xl">No Locations Found</h3><p class="text-gray-600 mt-2">Try adjusting your search criteria or filters.</p></div>`;
+            return;
+        }
+        locations.forEach(location => {
+            const ratingInfo = calculateAverageRating(location);
+            const starsHtml = generateStarsHtml(ratingInfo.average);
+
+            const card = document.createElement('div');
+            card.className = "location-card bg-white rounded-lg border border-gray-200 hover:shadow-lg hover:border-primary-500 transition-all duration-300 flex flex-col";
+            card.dataset.locationId = location.id;
+            card.innerHTML = `
+                <div class="relative">
+                    <img src="${location.imageUrl || 'https://placehold.co/600x400/e2e8f0/64748b?text=Storapedia'}" alt="${location.name}" class="location-card-image">
+                    ${location.distance !== null ? `<span class="absolute top-2 right-2 text-sm font-semibold text-primary-600 bg-white px-2 py-1 rounded-full shadow-md">${location.distance.toFixed(1)}km</span>` : ''}
+                </div>
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="font-bold text-lg text-gray-800 pr-2">${location.name}</h3>
+                    <div class="flex items-center gap-2 mt-1">
+                        <div class="rating-stars text-sm">${starsHtml}</div>
+                        <span class="text-xs text-gray-500">(${ratingInfo.count} reviews)</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mt-2 flex-grow">${location.address}</p>
+                    <p class="text-green-600 font-semibold text-sm mt-2">${location.capacity} units available</p>
+                    <button class="view-details-btn mt-4 w-full btn-secondary font-semibold py-2 rounded-lg" data-location-id-view="${location.id}">
+                        View Detail
+                    </button>
+                </div>`;
+
+            card.querySelector('.view-details-btn').addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent the card's main click event
+                openLocationDetailModal(e.currentTarget.dataset.locationIdView);
+            });
+
+            // Make the entire card clickable as a fallback
+            card.addEventListener('click', () => openLocationDetailModal(location.id));
+
+            listContainer.appendChild(card);
+        });
+    }
+    
+    function onPlaceChanged() {
+        if (!mainAutocomplete) return;
+        const place = mainAutocomplete.getPlace();
+        if (place?.geometry?.location) {
+            userLocation = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
+            document.getElementById('location-search-input').value = place.formatted_address;
+            if (map) {
+                map.setCenter(userLocation);
+                map.setZoom(13);
+            }
+            document.getElementById('distance-slider').disabled = false;
+            applyFiltersAndRender();
+        }
+    }
+    
+    function locateUser(isSilent = false) {
+        const btn = document.getElementById('use-my-location-btn'), icon = document.getElementById('location-btn-icon'), text = document.getElementById('location-btn-text');
+        
+        const originalState = () => {
+            btn.disabled = false;
+            icon.className = 'fas fa-location-arrow';
+            text.textContent = 'Use My Location';
+        };
+
+        if (!isSilent) {
+            btn.disabled = true;
+            icon.className = 'fas fa-spinner fa-spin';
+            text.textContent = 'Finding...';
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => { // Success
+                    userLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
+                    if (map) {
+                        map.setCenter(userLocation);
+                        map.setZoom(13);
+                    }
+                    if (geocoder) {
+                         geocoder.geocode({ location: userLocation }, (results, status) => {
+                            if (status === 'OK' && results[0]) {
+                                document.getElementById('location-search-input').value = results[0].formatted_address;
+                            }
+                        });
+                    }
+                    document.getElementById('distance-slider').disabled = false;
+                    applyFiltersAndRender(); // This will re-calculate distances and re-render everything
+                    if (!isSilent) originalState();
+                },
+                () => { // Error
+                    if (!isSilent) {
+                        originalState();
+                        Swal.fire('Location Access Denied', 'You can still search for locations manually.', 'warning');
+                    }
+                }, 
+                { timeout: 10000 }
+            );
+        } else {
+            if (!isSilent) originalState();
+        }
+    }
+    
+    // --- Other Functions (Auth, Modals, etc. - largely unchanged) ---
+    // ... (The rest of your JavaScript functions from the previous response)
+    // The following are essential utility functions that should be included
+    function calculateAverageRating(location) {
+        if (!location?.ratings) return { average: 0, count: 0 };
+        const ratingsArray = Object.values(location.ratings);
+        const count = ratingsArray.length;
+        if (count === 0) return { average: 0, count: 0 };
+        const sum = ratingsArray.reduce((acc, rating) => acc + rating, 0);
+        return { average: sum / count, count };
+    }
+
+    function generateStarsHtml(rating) {
+        const roundedRating = Math.round(rating);
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+            starsHtml += `<i class="fa-solid fa-star ${i <= roundedRating ? 'filled' : ''}"></i>`;
+        }
+        return starsHtml;
+    }
+
+    function haversineDistance(coords1, coords2) {
+        const R = 6371; // Radius of the Earth in km
+        const dLat = (coords2.lat - coords1.lat) * Math.PI / 180;
+        const dLng = (coords2.lng - coords1.lng) * Math.PI / 180;
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                  Math.cos(coords1.lat * Math.PI / 180) * Math.cos(coords2.lat * Math.PI / 180) *
+                  Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+    function setupEventListeners() {
+        // ... (all other event listeners from previous code)
+        document.getElementById('login-btn').addEventListener('click', () => openAuthModal('login'));
+        document.getElementById('signup-btn').addEventListener('click', () => openAuthModal('signup'));
+        document.getElementById('mobile-login-btn').addEventListener('click', () => openAuthModal('login'));
+        document.getElementById('mobile-signup-btn').addEventListener('click', () => openAuthModal('signup'));
+        document.getElementById('close-auth-modal').addEventListener('click', closeAuthModal);
+        document.getElementById('auth-form').addEventListener('submit', handleAuth);
+        document.getElementById('google-signin-btn').addEventListener('click', signInWithGoogle);
+        document.getElementById('booking-google-signin-btn').addEventListener('click', signInWithGoogle);
+        document.getElementById('auth-modal').addEventListener('click', (e) => { if (e.target.id === 'auth-toggle-btn') openAuthModal(document.getElementById('auth-mode').value === 'login' ? 'signup' : 'login'); if (e.target.id === 'auth-modal') closeAuthModal(); });
+        document.getElementById('user-menu-button').addEventListener('click', () => document.getElementById('user-menu-dropdown').classList.toggle('hidden'));
+        document.getElementById('logout-btn').addEventListener('click', handleLogout);
+        document.getElementById('dashboard-btn').addEventListener('click', loadUserDashboard);
+        document.getElementById('edit-profile-btn').addEventListener('click', handleEditProfile);
+        document.getElementById('change-password-btn').addEventListener('click', handleChangePassword);
+        document.querySelectorAll('.nav-link').forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); const targetId = link.dataset.target; if (document.getElementById('mobile-menu').classList.contains('hidden') === false) { document.getElementById('mobile-menu').classList.add('hidden'); } const targetElement = document.getElementById(targetId); if(targetId === 'home') { showSection('main-content'); window.scrollTo({top: 0, behavior: 'smooth'}); return; } if (targetElement) { showSection('main-content'); setTimeout(() => targetElement.scrollIntoView({ behavior: 'smooth' }), 50); } }); });
+        document.getElementById('mobile-menu-button').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
+        document.getElementById('use-my-location-btn').addEventListener('click', () => locateUser(false));
+        document.getElementById('close-booking-modal').addEventListener('click', closeBookingModal);
+        document.getElementById('booking-back-btn').addEventListener('click', () => navigateBookingStep('back'));
+        document.getElementById('booking-next-btn').addEventListener('click', () => navigateBookingStep('next'));
+        document.querySelectorAll('input[name="payment-option"]').forEach(radio => radio.addEventListener('change', () => showBookingStep(3)));
+        document.getElementById('close-qr-modal').addEventListener('click', closeQrModal);
+        document.getElementById('booking-storage-type').addEventListener('change', handleStorageTypeChange);
+        ['booking-package', 'booking-start-date', 'booking-start-time'].forEach(id => document.getElementById(id).addEventListener('change', updateEndDate));
+        document.querySelectorAll('input[name="service-option"]').forEach(radio => radio.addEventListener('change', updateBookingSummary));
+        document.getElementById('notification-button').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('notification-popup').classList.toggle('hidden'); if(!document.getElementById('notification-popup').classList.contains('hidden')) { populateNotificationPopup(); } });
+        document.getElementById('mark-all-read-btn').addEventListener('click', markNotificationsAsRead);
+        document.body.addEventListener('click', (e) => { if(!document.getElementById('notification-area')?.contains(e.target)) { document.getElementById('notification-popup')?.classList.add('hidden');} if(!document.getElementById('user-menu')?.contains(e.target)) { document.getElementById('user-menu-dropdown')?.classList.add('hidden'); } }); 
+        
+        const distanceSlider = document.getElementById('distance-slider');
+        const distanceValue = document.getElementById('distance-value');
+        distanceSlider.addEventListener('input', () => {
+            const value = distanceSlider.value;
+            distanceValue.textContent = value < 100 ? `< ${value} km` : 'any';
+            applyFiltersAndRender();
+        });
+    }
+
+// --- Sisa Fungsi JavaScript ---
+
+// --- AUTH & USER PROFILE ---
+function handleAuthStateChange() {
+    auth.onAuthStateChanged(async (user) => {
+        const authLinks = document.getElementById('auth-links');
+        const userMenu = document.getElementById('user-menu');
+        const mobileAuthLinks = document.getElementById('mobile-auth-links');
+        const notificationArea = document.getElementById('notification-area');
+        
+        if (user && !user.isAnonymous) {
+            currentUser = user;
+            await fetchUserProfile(user.uid);
+            authLinks.classList.add('hidden');
+            authLinks.classList.remove('md:flex');
+            mobileAuthLinks.classList.add('hidden');
+            userMenu.classList.remove('hidden');
+            notificationArea.classList.remove('hidden');
+            document.getElementById('user-greeting').textContent = `Hi, ${userProfile?.name?.split(' ')[0] || 'User'}!`;
+            closeAuthModal();
+            if (document.getElementById('user-dashboard').classList.contains('active')) {
+                loadUserDashboard();
+            }
+            listenForNotifications(user.uid);
+            initChatSession(user.uid);
+        } else {
+            currentUser = null;
+            userProfile = null;
+            authLinks.classList.remove('hidden');
+            authLinks.classList.add('md:flex');
+            mobileAuthLinks.classList.remove('hidden');
+            userMenu.classList.add('hidden');
+            notificationArea.classList.add('hidden');
+            showSection('main-content');
+            handleAnonymousChatLogin();
+        }
+    });
+}
+
+async function fetchUserProfile(uid) {
+    try {
+        const userSnapshot = await db.ref(`users/${uid}`).once('value');
+        userProfile = userSnapshot.exists() ? { uid: userSnapshot.key, ...userSnapshot.val() } : null;
+    } catch (error) { console.error("Error fetching user profile:", error); }
+}
+
+async function handleAuth(e) { 
+    e.preventDefault(); 
+    const email = document.getElementById('auth-email').value;
+    const password = document.getElementById('auth-password').value;
+    const name = document.getElementById('auth-name').value;
+    const phone = document.getElementById('auth-phone').value;
+    const mode = document.getElementById('auth-mode').value;
+    const submitBtn = document.getElementById('auth-submit-btn'); 
+    submitBtn.disabled = true; 
+    submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>Processing...`; 
+    try { 
+        if (mode === 'login') { 
+            await auth.signInWithEmailAndPassword(email, password); 
+            Swal.fire('Success!', 'You have successfully logged in.', 'success'); 
+        } else { 
+            if (!name || !phone) throw new Error('Please provide your full name and phone number.'); 
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password); 
+            await db.ref(`users/${userCredential.user.uid}`).set({ name, phone, email, createdAt: firebase.database.ServerValue.TIMESTAMP }); 
+            Swal.fire('Welcome!', 'Your account has been created.', 'success'); 
+        } 
+    } catch (error) { 
+        Swal.fire(`${mode === 'login' ? 'Login' : 'Sign Up'} Failed`, error.message, 'error'); 
+    } finally { 
+        submitBtn.disabled = false; 
+        submitBtn.innerHTML = mode === 'login' ? 'Login' : 'Sign Up'; 
+    } 
+}
+
+async function signInWithGoogle() { 
+    const provider = new firebase.auth.GoogleAuthProvider(); 
+    try { 
+        const result = await auth.signInWithPopup(provider); 
+        const { user } = result; 
+        const userRef = db.ref(`users/${user.uid}`); 
+        const userSnapshot = await userRef.once('value'); 
+        if (!userSnapshot.exists()) { 
+            await userRef.set({ name: user.displayName, email: user.email, phone: user.phoneNumber || '', createdAt: firebase.database.ServerValue.TIMESTAMP }); 
+            Swal.fire('Welcome!', 'Your account has been created with Google.', 'success'); 
+        } else { 
+            Swal.fire('Success!', 'You have successfully logged in with Google.', 'success'); 
+        } 
+        if (document.getElementById('booking-modal').classList.contains('flex')) { 
+            showBookingStep(3); 
+        } 
+    } catch (error) { 
+        Swal.fire('Google Sign-In Failed', error.message, 'error'); 
+    } 
+}
+    
+function handleLogout() { 
+    auth.signOut().then(() => Swal.fire('Logged Out', 'You have been successfully logged out.', 'info')); 
+}
+
+// --- MODALS (AUTH, BOOKING, QR) ---
+function openAuthModal(mode = 'login') { 
+    const modal = document.getElementById('auth-modal'); 
+    document.getElementById('auth-mode').value = mode; 
+    document.getElementById('auth-title').textContent = mode === 'login' ? 'Login' : 'Create an Account'; 
+    document.getElementById('auth-submit-btn').textContent = mode === 'login' ? 'Login' : 'Sign Up'; 
+    document.getElementById('google-signin-btn').innerHTML = `<img class="w-5 h-5 mr-2" src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google icon"> Sign ${mode === 'login' ? 'In' : 'Up'} with Google`; 
+    document.getElementById('auth-toggle-text').innerHTML = mode === 'login' ? `Don't have an account? <button id="auth-toggle-btn" class="font-medium text-primary-600 hover:text-primary-700">Sign Up</button>` : `Already have an account? <button id="auth-toggle-btn" class="font-medium text-primary-600 hover:text-primary-700">Login</button>`; 
+    document.getElementById('name-field-container').classList.toggle('hidden', mode === 'login'); 
+    document.getElementById('phone-field-container').classList.toggle('hidden', mode === 'login'); 
+    modal.classList.remove('hidden'); 
+    modal.classList.add('flex'); 
+    document.getElementById('auth-form').reset(); 
+}
+    
+function closeAuthModal() { 
+    document.getElementById('auth-modal').classList.add('hidden'); 
+}
+
+function closeBookingModal() {
+    document.getElementById('booking-modal').classList.add('hidden');
+    document.getElementById('booking-modal').classList.remove('flex');
+    document.getElementById('booking-form').reset();
+}
+
+function showQrCodeForBooking(bookingId) { 
+    const qrCanvas = document.getElementById('qrcode-canvas');
+    const qrModal = document.getElementById('qr-modal'); 
+    new QRious({ element: qrCanvas, value: bookingId, size: 200, padding: 10 }); 
+    qrModal.classList.remove('hidden'); 
+    qrModal.classList.add('flex'); 
+}
+    
+function closeQrModal() { 
+    document.getElementById('qr-modal').classList.add('hidden'); 
+}
+
+// --- DYNAMIC CONTENT & UI ---
+async function fetchAndDisplayTestimonials() {
+    const container = document.getElementById('testimonials-container');
+    try {
+        const snapshot = await db.ref('testimonials').orderByChild('visible').equalTo(true).once('value');
+            if (!snapshot.exists()) {
+            container.innerHTML = '<p class="text-center text-gray-500 col-span-full">No testimonials yet.</p>';
+            return;
+        }
+        let testimonialsHtml = '';
+        snapshot.forEach(child => {
+            const t = child.val();
+            testimonialsHtml += `
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <i class="fas fa-quote-left text-primary-500 text-2xl mb-4"></i>
+                    <p class="text-gray-600 mb-4">${t.text}</p>
+                    <div class="font-bold text-gray-800">${t.author}</div>
+                    <p class="text-sm text-gray-500">${t.location || ''}</p>
+                </div>`;
+        });
+        container.innerHTML = testimonialsHtml;
+    } catch (error) {
+            console.error("Error fetching testimonials:", error);
+        container.innerHTML = '<p class="text-center text-red-500 col-span-full">Could not load testimonials.</p>';
+    }
+}
+
+async function populateFAQ() {
+    const container = document.getElementById('faq-container');
+    try {
+        const snapshot = await db.ref('faqs').once('value');
+        if (!snapshot.exists()) { container.innerHTML = '<p class="text-center text-gray-500">FAQs are coming soon!</p>'; return; }
+        let faqHtml = '';
+        snapshot.forEach(child => {
+            const item = child.val();
+            faqHtml += `<div class="bg-white rounded-lg shadow-sm"><div class="faq-question p-5 cursor-pointer flex justify-between items-center hover:bg-gray-50"><h4 class="font-semibold text-lg">${item.q}</h4><i class="fas fa-chevron-down faq-icon transition-transform duration-300"></i></div><div class="faq-answer px-5"><p class="text-gray-600">${item.a}</p></div></div>`;
+        });
+        container.innerHTML = faqHtml;
+        container.querySelectorAll('.faq-question').forEach(el => {
+            el.addEventListener('click', () => {
+                const answer = el.nextElementSibling;
+                const isOpening = !answer.style.maxHeight || answer.style.maxHeight === '0px';
+                container.querySelectorAll('.faq-answer').forEach(ans => {
+                    ans.style.maxHeight = '0px'; ans.style.paddingTop = '0'; ans.style.paddingBottom = '0';
+                    ans.previousElementSibling.querySelector('.faq-icon').classList.remove('rotate-180');
+                });
+                if (isOpening) {
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                    answer.style.paddingTop = '0.5rem'; answer.style.paddingBottom = '1.25rem';
+                    el.querySelector('.faq-icon').classList.add('rotate-180');
+                }
+            });
+        });
+    } catch (error) { console.error("Error populating FAQs:", error); }
+}
+
+function showSection(sectionId) { 
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active')); 
+    const section = document.getElementById(sectionId); 
+    if (section) section.classList.add('active'); 
+    window.scrollTo(0, 0); 
+}
+
+function populateFooterLinks(linksData) { 
+    const container = document.getElementById('footer-links-container'); 
+    container.innerHTML = ''; 
+    Object.entries(linksData).forEach(([category, links]) => { 
+        if (Array.isArray(links) && category !== 'social_media') { 
+            const div = document.createElement('div'); 
+            div.innerHTML = `<h3 class="font-bold text-white uppercase tracking-wider">${category.replace(/_/g, ' ')}</h3>`; 
+            const ul = document.createElement('div'); 
+            ul.className = 'mt-4 flex flex-col space-y-2'; 
+            links.forEach(link => { 
+                ul.innerHTML += `<a href="${link.url || '#'}" class="nav-link hover:text-white" data-target="${(link.url || '#').replace('#', '')}">${link.text}</a>`; 
+            }); 
+            div.appendChild(ul); 
+            container.appendChild(div); 
+        } 
+    }); 
+}
+    
+function populateSocialMedia(socialData) { 
+    const container = document.getElementById('footer-social-media'); 
+    container.innerHTML = (socialData || []).map(link => `<a href="${link.url || '#'}" target="_blank" class="hover:text-white" title="${link.platform}"><i class="fab fa-${link.platform.toLowerCase()} text-xl"></i></a>`).join(''); 
+}
+    
+function updateCopyrightYear() { 
+    document.getElementById('copyright-year').textContent = new Date().getFullYear(); 
+}
+
+
+// --- REVIEWS & RATINGS ---
+async function openLocationDetailModal(locationId) {
+    const loc = locationsCache.find(l => l.id === locationId);
+    if (!loc) return;
+    
+    const ratingInfo = calculateAverageRating(loc);
+    const ratingStarsHtml = generateStarsHtml(ratingInfo.average);
+
+    const featuresHtml = (loc.features || []).map(f => `<span class="inline-flex items-center bg-gray-100 text-gray-800 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded-full"><i class="${f.icon} mr-2 text-primary-500"></i>${f.name}</span>`).join('') || '<p class="text-gray-500">No features listed.</p>';
+    
+    const pricingHtml = (loc.pricing || []).map(p => `
+        <div class="mb-3">
+            <h4 class="font-bold text-gray-700">${p.storageType}</h4>
+            <table class="w-full mt-1 text-sm text-left">
+                <thead class="bg-gray-100 text-xs uppercase"><tr><th class="px-3 py-2">Duration</th><th class="px-3 py-2">Price</th></tr></thead>
+                <tbody>${(p.rates || []).map(r => `<tr class="border-b"><td class="px-3 py-2">${r.duration}</td><td class="px-3 py-2 font-semibold">${currencyFormatter.format(r.price)}</td></tr>`).join('')}</tbody>
+            </table>
+        </div>`).join('') || '<p class="text-gray-500">No pricing schemes available.</p>';
+    
+    let reviewsHtml = '<div id="reviews-container" class="space-y-4 max-h-72 overflow-y-auto pr-2 mt-2">';
+    const reviewsSnapshot = await db.ref(`storageLocations/${locationId}/reviews`).orderByChild('timestamp').once('value');
+    if (reviewsSnapshot.exists()) {
+        const reviewsData = [];
+        reviewsSnapshot.forEach(snap => reviewsData.push({id: snap.key, ...snap.val()}));
+        reviewsData.reverse().forEach(review => {
+            const reviewStars = generateStarsHtml(review.rating);
+            let repliesHtml = '<div class="pl-8 mt-3 space-y-3">';
+            if (review.replies) {
+                Object.values(review.replies).forEach(reply => {
+                    repliesHtml += `<div class="bg-gray-100 p-2 rounded-md"><p class="font-semibold text-sm">${reply.name} <span class="text-xs font-normal text-gray-500">${new Date(reply.timestamp).toLocaleDateString()}</span></p><p class="text-gray-700 text-sm">${reply.text}</p></div>`;
+                });
+            }
+            repliesHtml += '</div>';
+
+            const replyFormHtml = currentUser ? `
+                <div class="pl-8 mt-2">
+                    <button class="text-xs font-semibold text-primary-600 hover:underline show-reply-form-btn">Reply</button>
+                    <div class="hidden reply-form mt-2">
+                        <textarea class="w-full p-2 border rounded-md text-sm" placeholder="Write a reply..."></textarea>
+                        <button class="btn-primary py-1 px-3 mt-1 rounded-md text-xs submit-reply-btn" data-review-id="${review.id}">Submit Reply</button>
+                    </div>
+                </div>` : '';
+
+            reviewsHtml += `<div class="border-t pt-3">
+                <div class="flex justify-between items-center"><div><p class="font-semibold">${review.name}</p><p class="text-xs text-gray-400">${new Date(review.timestamp).toLocaleDateString()}</p></div><div class="rating-stars">${reviewStars}</div></div>
+                <p class="text-gray-600 text-sm mt-1">${review.comment}</p>
+                ${repliesHtml}
+                ${replyFormHtml}
+            </div>`;
+        });
+    } else {
+        reviewsHtml += '<p class="text-gray-500 text-sm">No reviews yet. Be the first!</p>';
+    }
+    reviewsHtml += '</div>';
+
+    const canReview = currentUser && userBookingsCache.some(b => b.locationId === locationId && ['completed', 'active', 'checked_in'].includes(b.bookingStatus) && (!loc.ratings || !loc.ratings[currentUser.uid]));
+    const reviewFormHtml = canReview ? `
+        <div id="review-form" class="mt-6 border-t pt-4">
+            <h4 class="font-semibold text-gray-800 mb-2">Leave a Review</h4>
+            <div class="rating-stars mb-2 cursor-pointer text-2xl" id="submit-rating-stars">${Array.from({length: 5}, (_,i) => `<i class="fa-solid fa-star" data-value="${i+1}"></i>`).join('')}</div>
+            <input type="hidden" id="review-rating-value" value="0">
+            <textarea id="review-comment" class="w-full p-2 border rounded-md" placeholder="Share your experience..."></textarea>
+            <button id="submit-review-btn" data-location-id="${locationId}" class="btn-primary py-1 px-4 mt-2 rounded-md text-sm">Submit Review</button>
+        </div>` : '';
+
+    const modalHtml = `
+        <div class="text-left max-h-[85vh] overflow-y-auto p-1">
+            <img src="${loc.imageUrl || 'https://placehold.co/800x400/e2e8f0/64748b?text=Storapedia'}" class="w-full h-56 object-cover rounded-lg mb-4">
+            <div class="flex justify-between items-start flex-wrap gap-2"><h2 class="text-2xl lg:text-3xl font-bold">${loc.name}</h2>
+                <div class="flex items-center gap-2 text-lg">
+                    <div class="rating-stars">${ratingStarsHtml}</div><span class="font-bold text-gray-700">${ratingInfo.average.toFixed(1)}</span><span class="text-sm text-gray-500">(${ratingInfo.count})</span>
+                </div>
+            </div><p class="text-sm text-gray-500 mb-4">${loc.address}</p>
+            <p class="text-sm text-green-600 font-semibold mb-4">${loc.capacity} units available</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                <div><h3 class="font-semibold text-gray-800 mb-2 border-b pb-1">Description</h3><p class="text-gray-600 text-sm">${loc.description || 'No description provided.'}</p>
+                    <h3 class="font-semibold text-gray-800 mb-2 mt-4 border-b pb-1">Features</h3><div class="flex flex-wrap mt-2">${featuresHtml}</div>
+                </div>
+                <div><h3 class="font-semibold text-gray-800 mb-2 border-b pb-1">Pricing</h3><div class="max-h-60 overflow-y-auto pr-2">${pricingHtml}</div></div>
+            </div>
+            <div class="mt-6"><h3 class="font-semibold text-gray-800 mb-2 border-b pb-1">Reviews</h3>${reviewsHtml}</div>
+            ${reviewFormHtml}
+        </div>`;
+
+    Swal.fire({
+        html: modalHtml, width: '800px', showConfirmButton: true, confirmButtonText: '<i class="fas fa-calendar-check mr-2"></i>Book at this Location',
+        confirmButtonColor: '#2563eb', showCloseButton: true,
+        didOpen: () => {
+            const swalContainer = Swal.getHtmlContainer();
+            const stars = swalContainer.querySelectorAll('#submit-rating-stars .fa-star');
+            stars.forEach(star => {
+                star.addEventListener('mouseover', () => highlightStars(stars, star.dataset.value));
+                star.addEventListener('mouseout', () => highlightStars(stars, swalContainer.querySelector('#review-rating-value').value));
+                star.addEventListener('click', () => { swalContainer.querySelector('#review-rating-value').value = star.dataset.value; });
+            });
+            const submitBtn = swalContainer.querySelector('#submit-review-btn');
+            if (submitBtn) submitBtn.addEventListener('click', handleReviewSubmit);
+            swalContainer.querySelectorAll('.show-reply-form-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.target.nextElementSibling.classList.toggle('hidden');
+                });
+            });
+                swalContainer.querySelectorAll('.submit-reply-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => handleReviewReplySubmit(e, locationId));
+            });
+        }
+    }).then((result) => { if (result.isConfirmed) startBookingProcess(locationId); });
+}
+
+function highlightStars(stars, value) { stars.forEach(s => { s.classList.toggle('filled', s.dataset.value <= value); }); }
+
+async function handleReviewSubmit(e) {
+    const locationId = e.currentTarget.dataset.locationId, rating = parseInt(document.getElementById('review-rating-value').value), comment = document.getElementById('review-comment').value.trim();
+    if (rating === 0 || !comment) return Swal.fire('Oops!', 'Please provide a rating and a comment.', 'warning');
+    e.currentTarget.disabled = true; e.currentTarget.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    try {
+        const reviewData = { userId: currentUser.uid, name: userProfile.name, rating, comment, timestamp: firebase.database.ServerValue.TIMESTAMP };
+        const updates = {};
+        const reviewId = db.ref(`storageLocations/${locationId}/reviews`).push().key;
+        updates[`storageLocations/${locationId}/reviews/${reviewId}`] = reviewData;
+        updates[`storageLocations/${locationId}/ratings/${currentUser.uid}`] = rating;
+
+        await db.ref().update(updates);
+        Swal.fire('Thank You!', 'Your review has been submitted.', 'success').then(() => {
+            const locIndex = locationsCache.findIndex(l => l.id === locationId);
+            if (locIndex > -1) {
+                if (!locationsCache[locIndex].ratings) locationsCache[locIndex].ratings = {};
+                locationsCache[locIndex].ratings[currentUser.uid] = rating;
+            }
+            openLocationDetailModal(locationId); 
+            applyFiltersAndRender();
+        });
+    } catch (error) { Swal.fire('Error', 'Could not submit your review.', 'error'); e.currentTarget.disabled = false; e.currentTarget.textContent = 'Submit Review'; }
+}
+
+async function handleReviewReplySubmit(e, locationId) {
+    const btn = e.currentTarget;
+    const reviewId = btn.dataset.reviewId;
+    const textarea = btn.previousElementSibling;
+    const text = textarea.value.trim();
+    if (!text) return Swal.fire('Oops!', 'Reply cannot be empty.', 'warning');
+    if (!currentUser || !userProfile) return Swal.fire('Error', 'You must be logged in to reply.', 'error');
+    btn.disabled = true;
+    try {
+        const replyRef = db.ref(`storageLocations/${locationId}/reviews/${reviewId}/replies`).push();
+        await replyRef.set({
+            userId: currentUser.uid,
+            name: userProfile.name,
+            text: text,
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        });
+        textarea.value = '';
+        openLocationDetailModal(locationId);
+    } catch (error) {
+        Swal.fire('Error', 'Could not post your reply.', 'error');
+        btn.disabled = false;
+    }
+}
+
+
+// --- NOTIFICATIONS & CHAT ---
+function initChatWidget() {
+    const bubble = document.getElementById('chat-bubble'), windowEl = document.getElementById('chat-window'), closeBtn = document.getElementById('close-chat-btn'), form = document.getElementById('chat-form');
+    bubble.addEventListener('click', () => { 
+        windowEl.style.display = 'flex'; 
+        bubble.style.display = 'none';
+        if (unreadChatCount > 0 && currentUser) {
+            unreadChatCount = 0;
+            updateChatBadge();
+        }
+    });
+    closeBtn.addEventListener('click', () => { windowEl.style.display = 'none'; bubble.style.display = 'flex'; });
+    form.addEventListener('submit', handleSendMessage);
+}
+async function handleAnonymousChatLogin() {
+    try {
+        const existingUser = auth.currentUser;
+        if (existingUser && existingUser.isAnonymous) {
+            initChatSession(existingUser.uid);
+            return;
+        }
+        if (!existingUser) {
+            const { user } = await auth.signInAnonymously();
+            initChatSession(user.uid);
+        }
+    } catch (error) { console.error("Anonymous sign-in failed:", error); }
+}
+function initChatSession(chatId) {
+    if (!chatId) return;
+    if (chatListener) chatListener.off(); 
+    
+    const messagesEl = document.getElementById('chat-messages');
+    const chatWindow = document.getElementById('chat-window');
+    
+    chatListener = db.ref(`chats/${chatId}/messages`).orderByChild('timestamp');
+    chatListener.on('value', snapshot => {
+        messagesEl.innerHTML = '';
+        let newUnreadCount = 0;
+
+        if (snapshot.exists()) {
+            snapshot.forEach(child => {
+                const msg = child.val();
+                const isWindowHidden = chatWindow.style.display === 'none' || chatWindow.style.display === '';
+
+                if (msg.sender === 'admin' && !msg.read && isWindowHidden) {
+                    newUnreadCount++;
+                }
+
+                const bubble = document.createElement('div');
+                bubble.textContent = msg.text;
+                bubble.className = `chat-message ${msg.sender === 'admin' ? 'admin' : 'user'}`;
+                messagesEl.appendChild(bubble);
+            });
+            
+            if (newUnreadCount > unreadChatCount && hasInteracted) {
+                notificationSound.play().catch(e => console.warn("Chat sound play failed:", e));
+            }
+            unreadChatCount = newUnreadCount;
+
+        } else {
+            messagesEl.innerHTML = '<div class="chat-message admin">Hello! How can we help you today?</div>';
+            unreadChatCount = 0;
+        }
+        updateChatBadge();
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    });
+}
+
+function updateChatBadge() {
+    const badge = document.getElementById('chat-notification-badge');
+    if (unreadChatCount > 0) {
+        badge.textContent = unreadChatCount;
+        badge.style.display = 'flex';
+    } else {
+        badge.style.display = 'none';
+    }
+}
+    
+async function handleSendMessage(e) {
+    e.preventDefault();
+    const input = document.getElementById('chat-input'), text = input.value.trim();
+    if (!text) return;
+    const chatUser = auth.currentUser;
+    if (!chatUser) return Swal.fire("Error", "Could not identify user. Please refresh.", "error");
+    try {
+        await db.ref(`chats/${chatUser.uid}/messages`).push({ sender: 'user', text, timestamp: firebase.database.ServerValue.TIMESTAMP, read: false });
+            db.ref(`chats/${chatUser.uid}/lastMessage`).set({text, timestamp: firebase.database.ServerValue.TIMESTAMP, read: false})
+        input.value = '';
+    } catch (error) { Swal.fire("Send Failed", error.message, "error"); }
+}
+    
+function listenForNotifications(uid) {
+    const notifRef = db.ref(`notifications/users/${uid}`).orderByChild('read').equalTo(false);
+    notifRef.on('value', snapshot => {
+        const unreadCount = snapshot.numChildren();
+        const countBadge = document.getElementById('notification-count');
+        if (unreadCount > 0) {
+            if (unreadCount > lastNotificationCount && hasInteracted) {
+                notificationSound.play().catch(e => console.warn("Notification sound play failed:", e));
+            }
+            countBadge.textContent = unreadCount;
+            countBadge.style.display = 'flex';
+        } else { countBadge.style.display = 'none'; }
+        lastNotificationCount = unreadCount;
+    });
+}
+
+async function populateNotificationPopup() {
+    if(!currentUser) return;
+    const listEl = document.getElementById('notification-list');
+    listEl.innerHTML = '<i class="fas fa-spinner fa-spin text-center w-full"></i>';
+    const snapshot = await db.ref(`notifications/users/${currentUser.uid}`).orderByChild('timestamp').limitToLast(10).once('value');
+    if (!snapshot.exists()) return listEl.innerHTML = '<p class="text-gray-500 text-sm p-4 text-center">No notifications.</p>';
+    let reversedSnaps = [];
+    snapshot.forEach(child => reversedSnaps.unshift({id: child.key, ...child.val()}));
+    listEl.innerHTML = reversedSnaps.map(notif => `<div class="p-2 rounded-md cursor-pointer hover:bg-gray-100 ${!notif.read ? 'bg-blue-50' : ''}" data-notif-id="${notif.id}"><p class="font-bold text-sm">${notif.title}</p><p class="text-xs text-gray-600">${notif.body}</p><p class="text-right text-xs text-gray-400 mt-1">${new Date(notif.timestamp).toLocaleString('en-GB')}</p></div>`).join('');
+}
+
+async function markNotificationsAsRead() {
+    if(!currentUser) return;
+    document.getElementById('notification-popup').classList.add('hidden');
+    const unreadRef = db.ref(`notifications/users/${currentUser.uid}`).orderByChild('read').equalTo(false);
+    const snapshot = await unreadRef.once('value');
+    if(!snapshot.exists()) return;
+    const updates = {};
+    snapshot.forEach(child => {
+        updates[`${child.key}/read`] = true;
+    });
+    await db.ref(`notifications/users/${currentUser.uid}`).update(updates);
+}
+
+// --- BOOKING FLOW ---
+function startBookingProcess(locationId) {
+    const location = locationsCache.find(loc => loc.id === locationId);
+    if (!location) return;
+
+    document.getElementById('booking-form').reset();
+    document.getElementById('booking-location-id').value = location.id;
+    document.getElementById('booking-location-name').textContent = `at ${location.name}`;
+
+    const storageTypeSelect = document.getElementById('booking-storage-type');
+    const packageSelect = document.getElementById('booking-package');
+    storageTypeSelect.innerHTML = '<option value="">-- Select Type --</option>';
+    packageSelect.innerHTML = '<option value="">-- Select Package --</option>';
+    packageSelect.disabled = true;
+
+    if (location.pricing && Array.isArray(location.pricing)) {
+        location.pricing.forEach(type => {
+            const option = document.createElement('option');
+            option.value = type.storageType;
+            option.textContent = type.storageType;
+            storageTypeSelect.appendChild(option);
+        });
+        storageTypeSelect.disabled = false;
+    } else {
+        storageTypeSelect.innerHTML = '<option value="">No types available</option>';
+        storageTypeSelect.disabled = true;
+    }
+
+    const today = new Date();
+    const startDateInput = document.getElementById('booking-start-date');
+    startDateInput.setAttribute('min', today.toISOString().split('T')[0]);
+    startDateInput.value = today.toISOString().split('T')[0];
+    
+    updateEndDate();
+
+    currentBookingStep = 1;
+    showBookingStep(1);
+    document.getElementById('booking-modal').classList.remove('hidden');
+    document.getElementById('booking-modal').classList.add('flex');
+}
+
+function handleStorageTypeChange() {
+    const locationId = document.getElementById('booking-location-id').value;
+    const location = locationsCache.find(loc => loc.id === locationId);
+    const storageType = document.getElementById('booking-storage-type').value;
+    const packageSelect = document.getElementById('booking-package');
+    
+    packageSelect.innerHTML = '<option value="">-- Select Package --</option>';
+    if (!storageType || !location) {
+        packageSelect.disabled = true;
+        return;
+    }
+
+    const pricingInfo = location.pricing.find(p => p.storageType === storageType);
+    if (pricingInfo && pricingInfo.rates) {
+        pricingInfo.rates.forEach(rate => {
+            const option = document.createElement('option');
+            option.value = rate.duration;
+            option.dataset.price = rate.price;
+            option.textContent = `${rate.duration} (${currencyFormatter.format(rate.price)})`;
+            packageSelect.appendChild(option);
+        });
+        packageSelect.disabled = false;
+    } else {
+        packageSelect.disabled = true;
+    }
+    updateEndDate();
+}
+
+function updateEndDate() {
+    const startDateInput = document.getElementById('booking-start-date').value;
+    const packageDuration = document.getElementById('booking-package').value;
+    const endDateInput = document.getElementById('booking-end-date');
+    
+    if (!startDateInput || !packageDuration) {
+        endDateInput.value = '';
+        updateBookingSummary();
+        return;
+    }
+    
+    const startDate = new Date(startDateInput);
+    let endDate = new Date(startDate);
+
+    const durationMap = { 'daily': 1, 'weekly': 7 };
+    const durationName = packageDuration.toLowerCase();
+    
+    if (durationName.includes('daily')) {
+        endDate.setDate(startDate.getDate() + 1);
+    } else if (durationName.includes('weekly')) {
+        endDate.setDate(startDate.getDate() + 7);
+    } else if (durationName.includes('monthly')) {
+        endDate.setMonth(startDate.getMonth() + 1);
+    } else {
+        endDateInput.value = '';
+        updateBookingSummary();
+        return;
+    }
+    
+    endDateInput.value = endDate.toISOString().split('T')[0];
+    updateBookingSummary();
+}
+
+function showBookingStep(step) {
+    document.querySelectorAll('.booking-step').forEach(s => s.classList.remove('active'));
+    document.getElementById(`booking-step-${step}`).classList.add('active');
+    document.getElementById('booking-back-btn').style.visibility = (step === 1) ? 'hidden' : 'visible';
+    const nextBtn = document.getElementById('booking-next-btn');
+    if (step === 3) {
+        updateBookingSummary();
+        document.getElementById('guest-booking-details').classList.toggle('hidden', !!(currentUser && !currentUser.isAnonymous));
+        const paymentOption = document.querySelector('input[name="payment-option"]:checked').value;
+        nextBtn.textContent = paymentOption === 'online' ? 'Proceed to Payment' : 'Confirm Booking';
+    } else {
+        nextBtn.textContent = 'Next';
+    }
+    if (step === 2 && !pickupMap) initPickupMap();
+}
+
+function navigateBookingStep(direction) {
+    const isPickup = document.querySelector('input[name="service-option"]:checked').value === 'pickup';
+    if (direction === 'next') {
+        if (!validateBookingStep(currentBookingStep)) return;
+        if (currentBookingStep === 3) {
+            handleBookingSubmit();
+            return;
+        }
+        currentBookingStep = (currentBookingStep === 1 && !isPickup) ? 3 : currentBookingStep + 1;
+    } else {
+        currentBookingStep = (currentBookingStep === 3 && !isPickup) ? 1 : currentBookingStep - 1;
+    }
+    showBookingStep(currentBookingStep);
+}
+
+function validateBookingStep(step) {
+    if (step === 1) {
+        if (!document.getElementById('booking-storage-type').value) {
+            Swal.fire('Incomplete', 'Please select a storage type.', 'warning');
+            return false;
+        }
+        if (!document.getElementById('booking-package').value) {
+            Swal.fire('Incomplete', 'Please select a package.', 'warning');
+            return false;
+        }
+        const startDateTime = new Date(`${document.getElementById('booking-start-date').value}T${document.getElementById('booking-start-time').value}`);
+        if (isNaN(startDateTime.getTime())) {
+            Swal.fire('Incomplete Date', 'Please select a valid start date/time.', 'warning');
+            return false;
+        }
+    }
+    if (step === 2 && document.querySelector('input[name="service-option"]:checked').value === 'pickup') {
+        if (!document.getElementById('pickup-address-input').value) {
+            Swal.fire('Missing Address', 'Please provide a pickup address.', 'warning');
+            return false;
+        }
+    }
+    return true;
+}
+
+async function handleBookingSubmit() {
+    const nextBtn = document.getElementById('booking-next-btn');
+    nextBtn.disabled = true; nextBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>Processing...`;
+    try {
+        let userId = currentUser?.uid;
+        if (!userId || currentUser.isAnonymous) {
+            const name = document.getElementById('booking-name').value, email = document.getElementById('booking-email').value, phone = document.getElementById('booking-phone').value, password = document.getElementById('booking-password').value;
+            if (!name || !email || !phone || !password) throw new Error('Please fill in all your details to create an account.');
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            userId = userCredential.user.uid;
+            await db.ref(`users/${userId}`).set({ name, phone, email, createdAt: firebase.database.ServerValue.TIMESTAMP });
+        }
+        
+        const bookingData = getBookingData();
+        bookingData.userId = userId;
+        bookingData.paymentMethod = document.querySelector('input[name="payment-option"]:checked').value;
+        bookingData.paymentStatus = bookingData.paymentMethod === 'online' ? 'paid' : 'unpaid_on_site';
+
+        if (bookingData.paymentMethod === 'online') {
+            await Swal.fire({ title: 'Simulating Payment...', text: 'You will not be charged.', icon: 'info', timer: 2000, showConfirmButton: false });
+        }
+        
+        await finalizeBooking(bookingData);
+        
+        closeBookingModal();
+        if (auth.currentUser && !auth.currentUser.isAnonymous) loadUserDashboard();
+    } catch (error) { Swal.fire('Booking Failed', error.message, 'error'); } 
+    finally { nextBtn.disabled = false; nextBtn.textContent = 'Confirm Booking'; showBookingStep(3); }
+}
+
+async function finalizeBooking(bookingData) {
+    const newBookingRef = db.ref('bookings').push();
+    bookingData.id = newBookingRef.key;
+    await newBookingRef.set(bookingData);
+
+    // --- MULAI MODIFIKASI UNTUK NOTIFIKASI ADMIN ---
+    const adminNotification = {
+        title: "Pesanan Baru",
+        body: `Pesanan baru telah dibuat oleh ${userProfile?.name || 'Pengguna Tidak Dikenal'} untuk unit ${bookingData.storageType} di ${bookingData.locationName}.`,
+        type: 'booking', // Tambahkan tipe notifikasi
+        bookingId: bookingData.id, // Tambahkan ID booking
+        userId: bookingData.userId, // Tambahkan ID pengguna
+        timestamp: firebase.database.ServerValue.TIMESTAMP,
+        read: false
+    };
+    await db.ref('notifications/admin').push(adminNotification);
+    // --- AKHIR MODIFIKASI UNTUK NOTIFIKASI ADMIN ---
+
+    const locationRef = db.ref(`storageLocations/${bookingData.locationId}`);
+    await locationRef.transaction(loc => {
+        if (loc) loc.capacity = Math.max(0, (loc.capacity || 0) - 1);
+        return loc;
+    });
+    Swal.fire('Booking Confirmed!', `Your storage unit is booked. Check your dashboard for details.`, 'success');
+}
+
+function getBookingData() {
+    const locationId = document.getElementById('booking-location-id').value;
+    const storageType = document.getElementById('booking-storage-type').value;
+    const packageSelect = document.getElementById('booking-package');
+    const selectedOption = packageSelect.options[packageSelect.selectedIndex];
+    
+    const storageCost = parseFloat(selectedOption.dataset.price) || 0;
+    const serviceType = document.querySelector('input[name="service-option"]:checked').value;
+    const currentPickupFee = (serviceType === 'pickup') ? pickupFee : 0;
+    const totalPrice = storageCost + currentPickupFee;
+
+    const bookingData = {
+        locationId,
+        locationName: locationsCache.find(l => l.id === locationId).name,
+        storageType,
+        duration: selectedOption.value,
+        startDate: new Date(`${document.getElementById('booking-start-date').value}T${document.getElementById('booking-start-time').value}`).getTime(),
+        endDate: new Date(`${document.getElementById('booking-end-date').value}T${document.getElementById('booking-end-time').value}`).getTime(),
+        totalPrice,
+        serviceType,
+        bookingStatus: 'active',
+        createdAt: firebase.database.ServerValue.TIMESTAMP,
+    };
+    if (bookingData.serviceType === 'pickup') {
+        bookingData.pickupDetails = { address: document.getElementById('pickup-address-input').value, fee: pickupFee };
+    }
+    return bookingData;
+}
+
+function updateBookingSummary() {
+    const packageSelect = document.getElementById('booking-package');
+    if(!packageSelect.value) {
+        document.getElementById('summary-total-price').textContent = currencyFormatter.format(0);
+        return;
+    }
+
+    const selectedOption = packageSelect.options[packageSelect.selectedIndex];
+    const storageCost = parseFloat(selectedOption.dataset.price) || 0;
+    
+    const serviceType = document.querySelector('input[name="service-option"]:checked').value;
+    const currentPickupFee = (serviceType === 'pickup') ? pickupFee : 0;
+    const totalPrice = storageCost + currentPickupFee;
+
+    document.getElementById('summary-package-name').textContent = selectedOption.textContent.split('(')[0].trim();
+    document.getElementById('summary-storage-cost').textContent = currencyFormatter.format(storageCost);
+    document.getElementById('summary-pickup-row').style.display = (currentPickupFee > 0) ? 'flex' : 'none';
+    document.getElementById('summary-pickup-cost').textContent = currencyFormatter.format(currentPickupFee);
+    document.getElementById('summary-total-price').textContent = currencyFormatter.format(totalPrice);
+}
+
+// --- BOOKING MAPS ---
+function initPickupMap() {
+    const defaultPos = userLocation || { lat: -8.409518, lng: 115.188919 };
+    pickupMap = new google.maps.Map(document.getElementById('pickup-map'), { center: defaultPos, zoom: 15, mapTypeControl: false, streetViewControl: false, fullscreenControl: false, gestureHandling: 'greedy' });
+    pickupMarker = new google.maps.Marker({ map: pickupMap, position: defaultPos, draggable: true, animation: google.maps.Animation.DROP });
+    pickupMarker.addListener('dragend', () => updateAddressFromLatLng(pickupMarker.getPosition()));
+    const addressInput = document.getElementById('pickup-address-input');
+    pickupAutocomplete = new google.maps.places.Autocomplete(addressInput, { fields: ["formatted_address", "geometry"], componentRestrictions: { country: "id" } });
+    pickupAutocomplete.bindTo('bounds', pickupMap);
+    pickupAutocomplete.addListener('place_changed', () => {
+        const place = pickupAutocomplete.getPlace();
+        if (place.geometry?.location) {
+            pickupMap.setCenter(place.geometry.location); pickupMarker.setPosition(place.geometry.location);
+            addressInput.value = place.formatted_address;
+        }
+    });
+    document.getElementById('pickup-detect-location').addEventListener('click', () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(pos => {
+                const newPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                pickupMap.setCenter(newPos); pickupMarker.setPosition(newPos);
+                updateAddressFromLatLng(newPos);
+            });
+        }
+    });
+    updateAddressFromLatLng(defaultPos);
+}
+
+function updateAddressFromLatLng(latLng) { 
+    geocoder.geocode({ location: latLng }, (results, status) => { 
+        if (status === 'OK' && results[0]) { 
+            document.getElementById('pickup-address-input').value = results[0].formatted_address; 
+        } else { 
+            document.getElementById('pickup-address-input').value = 'Address not found'; 
+        } 
+    }); 
+}
+
+// --- DASHBOARD ---
+async function loadUserDashboard() {
+    if (!auth.currentUser || auth.currentUser.isAnonymous) {
+        openAuthModal('login'); return;
+    }
+    showSection('user-dashboard');
+    document.getElementById('dashboard-content').classList.add('hidden');
+    document.getElementById('dashboard-content-loader').classList.remove('hidden');
+    await fetchUserProfile(auth.currentUser.uid);
+    renderUserProfile();
+    db.ref('bookings').orderByChild('userId').equalTo(auth.currentUser.uid).on('value', snapshot => {
+        userBookingsCache = [];
+        snapshot.forEach(child => userBookingsCache.push({ id: child.key, ...child.val() }));
+        userBookingsCache.sort((a, b) => b.createdAt - a.createdAt);
+        renderUserBookings();
+    });
+    document.getElementById('dashboard-content-loader').classList.add('hidden');
+    document.getElementById('dashboard-content').classList.remove('hidden');
+}
+
+function renderUserProfile() {
+    const profileDetails = document.getElementById('profile-details');
+    if (!userProfile) {
+        profileDetails.innerHTML = `<p class="text-gray-500">Could not load profile.</p>`; return;
+    }
+    profileDetails.innerHTML = `<p><strong class="font-semibold text-gray-500">Name:</strong><br><span class="text-lg">${userProfile.name}</span></p><p><strong class="font-semibold text-gray-500">Email:</strong><br><span class="text-lg">${userProfile.email}</span></p><p><strong class="font-semibold text-gray-500">Phone:</strong><br><span class="text-lg">${userProfile.phone || 'Not provided'}</span></p>`;
+}
+
+function renderUserBookings() {
+    const bookingsList = document.getElementById('bookings-list');
+    bookingsList.innerHTML = '';
+    if (userBookingsCache.length === 0) {
+        bookingsList.innerHTML = `<div class="text-center bg-white p-8 rounded-lg"><i class="fas fa-box-open text-4xl text-gray-400 mb-4"></i><h3 class="font-semibold text-xl">No Bookings Yet</h3><p class="text-gray-600 mt-2">Ready to declutter? Find your perfect storage space now.</p><a href="#locations" class="mt-4 inline-block btn-primary font-bold px-6 py-2 rounded-lg nav-link" data-target="locations">Find a Location</a></div>`;
+        return;
+    }
+    userBookingsCache.forEach(booking => {
+        const startDate = new Date(booking.startDate).toLocaleDateString('en-GB');
+        const endDate = new Date(booking.endDate).toLocaleDateString('en-GB');
+        const now = Date.now();
+        let isExpired = now > booking.endDate && booking.bookingStatus !== 'completed';
+        let statusText = (booking.bookingStatus || 'active').replace(/_/g, ' ');
+        if (isExpired) statusText = 'expired';
+        let statusClass = 'bg-gray-100 text-gray-800';
+        if (['active', 'checked in'].includes(statusText)) statusClass = 'bg-green-100 text-green-800';
+        if (['expired', 'cancelled'].includes(statusText)) statusClass = 'bg-red-100 text-red-800';
+        if (statusText === 'completed') statusClass = 'bg-blue-100 text-blue-800';
+        const paymentClass = booking.paymentStatus === 'paid' ? 'text-green-600' : 'text-yellow-600';
+        const paymentText = (booking.paymentMethod === 'online' ? 'Paid Online' : 'Pay on Site');
+
+        const sealNumberHtml = booking.sealNumber 
+            ? `<p><strong class="text-gray-500">Seal Code:</strong> <span class="font-mono bg-gray-200 px-2 py-1 rounded">${booking.sealNumber}</span></p>` 
+            : (['checked_in', 'completed'].includes(booking.bookingStatus) ? `<p><strong class="text-gray-500">Seal Code:</strong> <span class="text-gray-400 italic">Not provided</span></p>` : '');
+
+        const sealPhotoHtml = booking.sealPhotoUrl 
+            ? `<div class="mt-4"><p class="font-semibold text-sm text-gray-600">Seal Photo:</p><img src="${booking.sealPhotoUrl}" alt="Seal Photo" class="mt-2 rounded-lg border shadow-sm w-full max-w-xs cursor-pointer" onclick="showImage('${booking.sealPhotoUrl}')"></div>` 
+            : (['checked_in', 'completed'].includes(booking.bookingStatus) ? `<div class="mt-4"><p class="font-semibold text-sm text-gray-600">Seal Photo:</p><p class="text-gray-400 italic text-sm">Not uploaded.</p></div>` : '');
+
+        const pickupHtml = booking.serviceType === 'pickup' && booking.pickupDetails ? `<div class="mt-4 bg-blue-50 p-3 rounded-md text-sm"><p class="font-semibold text-blue-800"><i class="fas fa-truck mr-2"></i>Pickup Scheduled</p><p class="text-blue-700 pl-5">${booking.pickupDetails.address}</p></div>` : '';
+        let actionButtonsHtml = '';
+        if (booking.bookingStatus === 'active' && now >= booking.startDate) actionButtonsHtml += `<button class="btn-secondary text-sm font-bold py-2 px-4 rounded-md check-in-btn" data-booking-id="${booking.id}"><i class="fas fa-sign-in-alt mr-2"></i>Check In</button>`;
+        if (booking.bookingStatus === 'checked_in') actionButtonsHtml += `<button class="btn-secondary text-sm font-bold py-2 px-4 rounded-md text-red-600 border-red-300 hover:bg-red-50 check-out-btn" data-booking-id="${booking.id}" data-location-id="${booking.locationId}"><i class="fas fa-sign-out-alt mr-2"></i>Check Out</button>`;
+        
+        const bookingEl = document.createElement('div');
+        bookingEl.className = `bg-white p-6 rounded-lg shadow-md border-l-4 ${isExpired ? 'border-red-400' : 'border-green-500'}`;
+        bookingEl.innerHTML = `<div class="flex flex-col sm:flex-row justify-between sm:items-start gap-2"><div><h3 class="text-xl font-bold capitalize">${booking.storageType} (${booking.duration})</h3><p class="text-gray-600">${booking.locationName}</p><p class="text-gray-500 text-xs mt-1">Booking ID: ${booking.id}</p></div><span class="text-sm font-bold px-3 py-1 rounded-full ${statusClass} self-start sm:self-center capitalize">${statusText}</span></div><div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm border-t pt-4"><div><p class="text-gray-500">Booked Period</p><p class="font-semibold">${startDate} to ${endDate}</p></div><div><p class="text-gray-500">Payment</p><p class="font-semibold ${paymentClass}">${paymentText} <span class="text-gray-800">(${currencyFormatter.format(booking.totalPrice)})</span></p></div>${booking.checkInTime ? `<div><p class="text-gray-500">Checked In</p><p class="font-semibold">${new Date(booking.checkInTime).toLocaleString('en-GB')}</p></div>` : ''}${booking.checkOutTime ? `<div><p class="text-gray-500">Checked Out</p><p class="font-semibold">${new Date(booking.checkOutTime).toLocaleString('en-GB')}</p></div>` : ''}<div class="sm:col-span-2">${sealNumberHtml}</div></div>${pickupHtml}${sealPhotoHtml}<div class="mt-4 flex flex-wrap gap-3 border-t pt-4"><button class="btn-secondary text-sm font-bold py-2 px-4 rounded-md" onclick="showQrCodeForBooking('${booking.id}')">Show QR</button><button class="btn-secondary text-sm font-bold py-2 px-4 rounded-md download-invoice-btn" data-booking-id="${booking.id}">Invoice</button>${actionButtonsHtml}</div>`;
+        bookingsList.appendChild(bookingEl);
+    });
+    document.querySelectorAll('.download-invoice-btn').forEach(btn => btn.addEventListener('click', (e) => generateInvoicePdf(e.currentTarget.dataset.bookingId)));
+    document.querySelectorAll('.check-in-btn').forEach(btn => btn.addEventListener('click', (e) => handleUserCheckIn(e.currentTarget.dataset.bookingId)));
+    document.querySelectorAll('.check-out-btn').forEach(btn => btn.addEventListener('click', (e) => handleUserCheckOut(e.currentTarget.dataset.bookingId, e.currentTarget.dataset.locationId)));
+}
+
+function showImage(url) { 
+    Swal.fire({ imageUrl: url, imageWidth: '90%', imageAlt: 'Detail Photo', showConfirmButton: false, customClass: { popup: 'p-0', image: 'rounded-lg' } }); 
+}
+
+async function handleUserCheckIn(bookingId) {
+    const { value: sealNumber } = await Swal.fire({
+        title: 'Check-In Confirmation',
+        text: "Please enter the seal number provided at the facility.",
+        input: 'text',
+        inputPlaceholder: 'Enter seal number here...',
+        showCancelButton: true,
+        confirmButtonColor: '#2563eb',
+        confirmButtonText: 'Confirm & Check In',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'You need to enter a seal number!'
+            }
+        }
+    });
+
+    if (sealNumber) {
+        try {
+            await db.ref(`bookings/${bookingId}`).update({
+                bookingStatus: 'checked_in',
+                checkInTime: firebase.database.ServerValue.TIMESTAMP,
+                sealNumber: sealNumber
+            });
+            Swal.fire('Checked In!', 'Your rental has officially started.', 'success');
+        } catch (err) {
+            Swal.fire('Error', err.message, 'error');
+        }
+    }
+}
+    
+async function handleUserCheckOut(bookingId, locationId) { 
+    Swal.fire({ 
+        title: 'Confirm Check Out?', 
+        text: "This will end your rental and cannot be undone.", 
+        icon: 'warning', 
+        showCancelButton: true, 
+        confirmButtonColor: '#d33', 
+        confirmButtonText: 'Yes, Check Out!' 
+    }).then(async (result) => { 
+        if (result.isConfirmed) { 
+            await db.ref(`bookings/${bookingId}`).update({ bookingStatus: 'completed', checkOutTime: firebase.database.ServerValue.TIMESTAMP }); 
+            await db.ref(`storageLocations/${locationId}`).transaction(loc => { 
+                if (loc) loc.capacity = (loc.capacity || 0) + 1; 
+                return loc; 
+            }); 
+            Swal.fire('Checked Out!', 'Your rental has ended. Thank you!', 'success'); 
+        } 
+    }); 
+}
+    
+async function handleEditProfile() {
+    if (!userProfile) return;
+    const { value: formValues } = await Swal.fire({
+        title: 'Edit Your Profile',
+        html: `<input id="swal-name" class="swal2-input" placeholder="Full Name" value="${userProfile.name}">
+                <input id="swal-phone" class="swal2-input" placeholder="Phone Number" value="${userProfile.phone || ''}">`,
+        focusConfirm: false, showCancelButton: true, confirmButtonText: 'Save Changes',
+        preConfirm: () => [document.getElementById('swal-name').value, document.getElementById('swal-phone').value]
+    });
+    if (formValues) {
+        const [newName, newPhone] = formValues;
+        try {
+            await db.ref(`users/${currentUser.uid}`).update({ name: newName, phone: newPhone });
+            await fetchUserProfile(currentUser.uid);
+            renderUserProfile();
+            document.getElementById('user-greeting').textContent = `Hi, ${userProfile.name.split(' ')[0]}!`;
+            Swal.fire('Success!', 'Your profile has been updated.', 'success');
+        } catch (error) { Swal.fire('Error', 'Could not update your profile.', 'error'); }
+    }
+}
+
+async function handleChangePassword() {
+    if (!currentUser) return;
+    const { value: formValues } = await Swal.fire({
+        title: 'Change Password',
+        html: `<input id="swal-current-password" type="password" class="swal2-input" placeholder="Current Password">
+                <input id="swal-new-password" type="password" class="swal2-input" placeholder="New Password">`,
+        focusConfirm: false, showCancelButton: true, confirmButtonText: 'Change Password',
+        preConfirm: () => [document.getElementById('swal-current-password').value, document.getElementById('swal-new-password').value]
+    });
+
+    if (formValues) {
+        const [currentPassword, newPassword] = formValues;
+        if (!currentPassword || !newPassword) {
+            Swal.fire('Error', 'Both fields are required.', 'error');
+            return;
+        }
+        try {
+            const credential = firebase.auth.EmailAuthProvider.credential(currentUser.email, currentPassword);
+            await currentUser.reauthenticateWithCredential(credential);
+            await currentUser.updatePassword(newPassword);
+            Swal.fire('Success!', 'Your password has been changed successfully.', 'success');
+        } catch (error) {
+            console.error("Password change error:", error);
+            Swal.fire('Error', 'Failed to change password. Please check your current password.', 'error');
+        }
+    }
+}
+
+async function generateInvoicePdf(bookingId) {
+    const booking = userBookingsCache.find(b => b.id === bookingId);
+    if (!booking || !userProfile) { Swal.fire('Error', 'Booking or user details not found.', 'error'); return; }
+    
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    doc.setFontSize(22); doc.setTextColor('#2563eb'); doc.text("STORAPEDIA", 14, 22);
+    doc.setFontSize(18); doc.setTextColor('#333333'); doc.text("INVOICE", doc.internal.pageSize.getWidth() - 14, 22, { align: 'right' });
+    doc.setDrawColor('#2563eb'); doc.setLineWidth(0.5); doc.line(14, 28, doc.internal.pageSize.getWidth() - 14, 28);
+    
+    doc.setFontSize(10); doc.setTextColor('#666666');
+    doc.text(`Invoice ID: INV-${booking.id.substring(1, 8).toUpperCase()}`, doc.internal.pageSize.getWidth() - 14, 35, { align: 'right' });
+    doc.text(`Date: ${new Date(booking.createdAt).toLocaleDateString('en-GB')}`, doc.internal.pageSize.getWidth() - 14, 40, { align: 'right' });
+    
+    doc.setFontSize(12); doc.setTextColor('#333333'); doc.text("Bill To:", 14, 45);
+    doc.setFontSize(10);
+    doc.text(userProfile.name, 14, 52);
+    doc.text(userProfile.email, 14, 57);
+    doc.text(userProfile.phone || 'N/A', 14, 62);
+    
+    const itemDetails = [];
+    const storageCost = booking.totalPrice - (booking.pickupDetails?.fee || 0);
+    itemDetails.push([
+        `${booking.storageType} - ${booking.duration || ''}`,
+        `From: ${new Date(booking.startDate).toLocaleDateString('en-GB')}\nTo: ${new Date(booking.endDate).toLocaleDateString('en-GB')}`,
+        currencyFormatter.format(storageCost)
+    ]);
+
+    if(booking.serviceType === 'pickup' && booking.pickupDetails) {
+        itemDetails.push(['Pickup Service', booking.pickupDetails.address, currencyFormatter.format(booking.pickupDetails.fee)]);
+    }
+    
+    doc.autoTable({
+        startY: 75,
+        head: [['Item Description', 'Details', 'Amount']],
+        body: itemDetails,
+        theme: 'striped',
+        headStyles:{fillColor: '#2563eb'},
+        styles:{fontSize:10,cellPadding:3},
+        columnStyles:{2:{halign:'right'}}
+    });
+    
+    const finalY = doc.autoTable.previous.finalY;
+    doc.setFontSize(12); doc.setTextColor('#333333');
+    doc.text("Total Amount:", doc.internal.pageSize.getWidth() - 70, finalY + 10);
+    doc.setFontSize(14); doc.setTextColor('#2563eb');
+    doc.text(`${currencyFormatter.format(booking.totalPrice)}`, doc.internal.pageSize.getWidth() - 14, finalY + 10, { align: 'right' });
+    
+    doc.setFontSize(10); doc.setTextColor('#666666');
+    doc.text(`Payment Status: ${booking.paymentStatus === 'paid' ? 'Paid' : 'Unpaid'}`, doc.internal.pageSize.getWidth() - 14, finalY + 17, { align: 'right' });
+    
+    doc.save(`invoice_storapedia_${booking.id.substring(0,8)}.pdf`);
+}
+
+function renderMapMarkers(locations) {
+    if (!map) return;
+    // Clear existing markers
+    markers.forEach(marker => marker.setMap(null));
+    markers = [];
+    
+    locations.forEach(location => {
+        if (location.geolocation?.latitude && location.geolocation?.longitude) {
+            const marker = new google.maps.Marker({
+                position: { lat: location.geolocation.latitude, lng: location.geolocation.longitude },
+                map: map,
+                title: location.name,
+                animation: google.maps.Animation.DROP,
+                locationId: location.id
+            });
+            marker.addListener('click', () => {
+                const content = `<div class="p-2 font-sans max-w-xs"><h3 class="font-bold text-base">${location.name}</h3><p class="text-gray-600 text-sm">${location.address}</p><p class="text-green-600 font-semibold text-sm mt-1">${location.capacity} units available</p><button class="mt-3 w-full btn-primary text-white font-bold py-2 px-4 rounded view-details-btn-infowindow" data-location-id-view="${location.id}">View Details</button></div>`;
+                infoWindow.setContent(content);
+                infoWindow.open(map, marker);
+                document.querySelectorAll('.location-card').forEach(c => c.classList.remove('highlighted'));
+                const card = document.querySelector(`.location-card[data-location-id="${location.id}"]`);
+                if (card) {
+                    card.classList.add('highlighted');
+                    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            });
+            markers.push(marker);
+        }
+    });
+}
+
+</script>
+</body>
+</html>

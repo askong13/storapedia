@@ -1,0 +1,509 @@
+{
+  "bookings": {
+    "booking_01": {
+      "bookingStatus": "checked_in",
+      "checkInTime": 1753997586400,
+      "createdAt": 1753993800000,
+      "duration": "Weekly",
+      "endDate": 1754684400000,
+      "id": "booking_01",
+      "locationId": "location_denpasar",
+      "locationName": "Storapedia Denpasar",
+      "paymentMethod": "online",
+      "paymentStatus": "paid",
+      "serviceType": "self-dropoff",
+      "startDate": 1754070000000,
+      "storageType": "Luggage",
+      "totalPrice": 30,
+      "updatedAt": 1753997586400,
+      "userId": "user_01_uid"
+    },
+    "-OWYBZ1Xj9CvQBqIeoQm": {
+      "bookingStatus": "checked_in",
+      "checkInTime": 1754011305338,
+      "createdAt": 1754010894790,
+      "duration": "Daily",
+      "endDate": 1754125200000,
+      "id": "-OWYBZ1Xj9CvQBqIeoQm",
+      "locationId": "location_canggu",
+      "locationName": "Storapedia Canggu",
+      "paymentMethod": "online",
+      "paymentStatus": "paid",
+      "serviceType": "self-dropoff",
+      "startDate": 1754010000000,
+      "storageType": "Surfboard",
+      "totalPrice": 4,
+      "updatedAt": 1754011305338,
+      "userId": "o8cZUnlmRmRvRlF7h5BPbA0kNaj1"
+    },
+    "-OWYFkC6tQ6afhLQjS-0": {
+      "bookingStatus": "checked_in",
+      "checkInTime": 1754012010698,
+      "createdAt": 1754011993271,
+      "duration": "Daily",
+      "endDate": 1754125200000,
+      "id": "-OWYFkC6tQ6afhLQjS-0",
+      "locationId": "location_canggu",
+      "locationName": "Storapedia Canggu",
+      "paymentMethod": "unpaid_on_site",
+      "paymentStatus": "unpaid_on_site",
+      "serviceType": "self-dropoff",
+      "startDate": 1754010000000,
+      "storageType": "Surfboard",
+      "totalPrice": 4,
+      "updatedAt": 1754012010698,
+      "userId": "o8cZUnlmRmRvRlF7h5BPbA0kNaj1"
+    },
+    "-OWYjB2mVAC82fx0FO7I": {
+      "bookingStatus": "checked_in",
+      "checkInTime": 1754019991555,
+      "createdAt": 1754019971573,
+      "duration": "Daily",
+      "endDate": 1754125200000,
+      "id": "-OWYjB2mVAC82fx0FO7I",
+      "locationId": "location_canggu",
+      "locationName": "Storapedia Canggu",
+      "paymentMethod": "unpaid_on_site",
+      "paymentStatus": "unpaid_on_site",
+      "sealNumber": "123556",
+      "serviceType": "self-dropoff",
+      "startDate": 1754010000000,
+      "storageType": "Surfboard",
+      "totalPrice": 4,
+      "userId": "XM1yxW7ePoO8SrsQ8MrhhpKTw4P2"
+    },
+    "-OWYBMs_z4I2v9W9NXVr": {
+      "bookingStatus": "checked_in",
+      "checkInTime": 1754019845250,
+      "createdAt": 1754010845000,
+      "duration": "Weekly",
+      "endDate": 1754643600000,
+      "id": "-OWYBMs_z4I2v9W9NXVr",
+      "locationId": "location_canggu",
+      "locationName": "Storapedia Canggu",
+      "paymentMethod": "unpaid_on_site",
+      "paymentStatus": "unpaid_on_site",
+      "sealNumber": "123556",
+      "serviceType": "self-dropoff",
+      "startDate": 1754013660000,
+      "storageType": "Backpack Locker",
+      "totalPrice": 35,
+      "userId": "5F6S5k1q0aaLYVUrYGHcbjnoWaA2"
+    },
+    "-OWYkCl6cvq0aKhJim9h": {
+      "bookingStatus": "active",
+      "createdAt": 1754020240709,
+      "duration": "Weekly",
+      "endDate": 1754643600000,
+      "id": "-OWYkCl6cvq0aKhJim9h",
+      "locationId": "location_canggu",
+      "locationName": "Storapedia Canggu",
+      "paymentMethod": "unpaid_on_site",
+      "paymentStatus": "unpaid_on_site",
+      "serviceType": "self-dropoff",
+      "startDate": 1754010000000,
+      "storageType": "Surfboard",
+      "totalPrice": 25,
+      "userId": "XM1yxW7ePoO8SrsQ8MrhhpKTw4P2"
+    }
+  },
+  "chats": {
+    "XM1yxW7ePoO8SrsQ8MrhhpKTw4P2": {
+      "lastMessage": {
+        "read": false,
+        "text": "cek",
+        "timestamp": 1754020109669
+      },
+      "messages": {
+        "-OWYjhhQEjU-LXIZNoVb": {
+          "read": true,
+          "sender": "user",
+          "text": "cek",
+          "timestamp": 1754020109403
+        },
+        "-OWYjoNNZn95IL9eAp07": {
+          "read": false,
+          "sender": "admin",
+          "text": "hallo",
+          "timestamp": 1754020136771
+        }
+      }
+    },
+    "eTbvwHeJ0TPdWxtP2K8t9t9a2kE2": {
+      "lastMessage": {
+        "read": false,
+        "text": "a",
+        "timestamp": 1754038129407
+      },
+      "messages": {
+        "-OWZoS2qySqdxLDJWfBV": {
+          "read": false,
+          "sender": "user",
+          "text": "a",
+          "timestamp": 1754038129159
+        }
+      }
+    },
+    "user_01_uid": {
+      "lastMessage": {
+        "read": true,
+        "text": "Thank you for the info!",
+        "timestamp": 1753994100000
+      },
+      "messages": {
+        "msg1": {
+          "read": true,
+          "sender": "admin",
+          "text": "Hello! How can we help you today?",
+          "timestamp": 1753994040000
+        },
+        "msg2": {
+          "read": true,
+          "sender": "user",
+          "text": "Hi, are you open on public holidays?",
+          "timestamp": 1753994070000
+        },
+        "msg3": {
+          "read": true,
+          "sender": "admin",
+          "text": "Yes, our Denpasar branch offers 24/7 access.",
+          "timestamp": 1753994085000
+        },
+        "msg4": {
+          "read": true,
+          "sender": "user",
+          "text": "Thank you for the info!",
+          "timestamp": 1753994100000
+        }
+      }
+    }
+  },
+  "faqs": {
+    "faq1": {
+      "a": "You can book a storage unit directly through our website. Simply find a location near you, choose the unit size and duration, and complete the booking online in minutes.",
+      "q": "How do I book a storage unit?"
+    },
+    "faq2": {
+      "a": "We accept online payments via credit/debit card and bank transfers. You can also choose to pay on-site at the facility.",
+      "q": "What payment methods do you accept?"
+    },
+    "faq3": {
+      "a": "Yes, security is our top priority. All our facilities are equipped with 24/7 CCTV surveillance, secure access controls, and on-site staff.",
+      "q": "Is my stuff safe with Storapedia?"
+    },
+    "faq4": {
+      "a": "Access hours vary by location. Most of our main branches offer 24/7 access for your convenience. Please check the specific location details page.",
+      "q": "What are your access hours?"
+    }
+  },
+  "notifications": {
+    "users": {
+      "user_01_uid": {
+        "notif_01": {
+          "title": "Booking Confirmed!",
+          "body": "Your weekly luggage storage booking at Storapedia Denpasar is confirmed.",
+          "timestamp": 1753993801000,
+          "read": false
+        },
+        "notif_02": {
+          "title": "Payment Received",
+          "body": "Your payment for booking ID booking_01 has been received.",
+          "timestamp": 1753993810000,
+          "read": false
+        }
+      },
+      "XM1yxW7ePoO8SrsQ8MrhhpKTw4P2": {
+        "notif_01": {
+          "title": "Booking Checked In",
+          "body": "Your surfboard locker at Canggu is now active.",
+          "timestamp": 1754019992000,
+          "read": false
+        }
+      },
+      "o8cZUnlmRmRvRlF7h5BPbA0kNaj1": {
+        "notif_01": {
+          "title": "New Booking",
+          "body": "You have a new daily booking for Surfboard at Canggu.",
+          "timestamp": 1754011305338,
+          "read": false
+        }
+      }
+    },
+    "admin": {
+      "notif_01": {
+        "title": "New Booking",
+        "body": "Alex Johnson just created a booking at Denpasar.",
+        "timestamp": 1753993802000,
+        "read": false
+      },
+      "notif_02": {
+        "title": "Payment Received",
+        "body": "Payment received for booking booking_01 by Alex Johnson.",
+        "timestamp": 1753993810001,
+        "read": false
+      }
+    }
+  },
+  "reviews": {
+    "location_denpasar": {
+      "review_01": {
+        "comment": "The facility is clean and the 24/7 access is a huge plus. The booking process was incredibly smooth. Highly recommended!",
+        "name": "Alex Johnson",
+        "rating": 5,
+        "timestamp": 1753995000000,
+        "userId": "user_01_uid"
+      }
+    }
+  },
+  "settings": {
+    "banner": {
+      "imageUrl": "https://images.unsplash.com/photo-1587042565985-a88566a7b396?q=80&w=2070&auto=format&fit=crop",
+      "subtitle": "Find affordable and accessible self-storage units near you. Book online in minutes.",
+      "title": "Secure, Simple, Smart Storage."
+    },
+    "footerLinks": {
+      "company": [
+        {
+          "text": "About Us",
+          "url": "#"
+        },
+        {
+          "text": "Contact",
+          "url": "#"
+        },
+        {
+          "text": "Careers",
+          "url": "#"
+        }
+      ],
+      "resources": [
+        {
+          "text": "FAQ",
+          "url": "#faq"
+        },
+        {
+          "text": "Blog",
+          "url": "#"
+        },
+        {
+          "text": "Privacy Policy",
+          "url": "#"
+        }
+      ]
+    },
+    "pricing": {
+      "pickupFee": 10
+    },
+    "social_media": [
+      {
+        "platform": "facebook",
+        "url": "https://facebook.com"
+      },
+      {
+        "platform": "instagram",
+        "url": "https://instagram.com"
+      },
+      {
+        "platform": "twitter",
+        "url": "https://twitter.com"
+      }
+    ]
+  },
+  "storageLocations": {
+    "location_canggu": {
+      "address": "Jl. Pantai Batu Bolong No.22, Canggu, Bali",
+      "capacity": 25,
+      "description": "Perfect for surfers and digital nomads. Store your surfboards, luggage, and work equipment safely in our Canggu facility.",
+      "features": [
+        {
+          "icon": "fas fa-water",
+          "name": "Surfboard Racks"
+        },
+        {
+          "icon": "fas fa-video",
+          "name": "CCTV Security"
+        },
+        {
+          "icon": "fas fa-wifi",
+          "name": "Free WiFi"
+        }
+      ],
+      "geolocation": {
+        "latitude": -8.6595,
+        "longitude": 115.1295
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1599494326528-34676161176b?q=80&w=2070&auto=format&fit=crop",
+      "name": "Storapedia Canggu",
+      "pricing": [
+        {
+          "rates": [
+            {
+              "duration": "Daily",
+              "price": 4
+            },
+            {
+              "duration": "Weekly",
+              "price": 25
+            }
+          ],
+          "storageType": "Surfboard"
+        },
+        {
+          "rates": [
+            {
+              "duration": "Daily",
+              "price": 6
+            },
+            {
+              "duration": "Weekly",
+              "price": 35
+            }
+          ],
+          "storageType": "Backpack Locker"
+        }
+      ],
+      "ratings": {
+        "o8cZUnlmRmRvRlF7h5BPbA0kNaj1": 5
+      },
+      "reviews": {
+        "-OWY_pPs_GJPohQFPz-p": {
+          "comment": "c",
+          "name": "Jamal Abdullah",
+          "rating": 5,
+          "replies": {
+            "-OWY_rKGQb7tfKles1Ib": {
+              "name": "Jamal Abdullah",
+              "text": "test",
+              "timestamp": 1754017527437,
+              "userId": "o8cZUnlmRmRvRlF7h5BPbA0kNaj1"
+            }
+          },
+          "timestamp": 1754017519607,
+          "userId": "o8cZUnlmRmRvRlF7h5BPbA0kNaj1"
+        }
+      }
+    },
+    "location_denpasar": {
+      "address": "Jl. Teuku Umar No.10, Dauh Puri Kauh, Denpasar, Bali",
+      "capacity": 48,
+      "description": "Our main branch in the heart of Denpasar. Secure, accessible, and perfect for both personal and business storage needs.",
+      "features": [
+        {
+          "icon": "fas fa-clock",
+          "name": "24/7 Access"
+        },
+        {
+          "icon": "fas fa-video",
+          "name": "CCTV Security"
+        },
+        {
+          "icon": "fas fa-snowflake",
+          "name": "Air Conditioned"
+        }
+      ],
+      "geolocation": {
+        "latitude": -8.6702,
+        "longitude": 115.2124
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1565551912948-6d288a7848c7?q=80&w=1974&auto=format&fit=crop",
+      "name": "Storapedia Denpasar",
+      "pricing": [
+        {
+          "rates": [
+            {
+              "duration": "Daily",
+              "price": 5
+            },
+            {
+              "duration": "Weekly",
+              "price": 30
+            },
+            {
+              "duration": "Monthly",
+              "price": 100
+            }
+          ],
+          "storageType": "Luggage"
+        },
+        {
+          "rates": [
+            {
+              "duration": "Monthly",
+              "price": 40
+            }
+          ],
+          "storageType": "Document Box"
+        }
+      ],
+      "ratings": {
+        "user_01_uid": 5
+      }
+    }
+  },
+  "testimonials": {
+    "testi1": {
+      "author": "Sarah - Digital Nomad",
+      "location": "Canggu",
+      "text": "Storapedia Canggu was a lifesaver! I could safely store my extra luggage and gear while exploring the island. Super easy and secure.",
+      "visible": true
+    },
+    "testi2": {
+      "author": "Budi Hartono - Business Owner",
+      "location": "Denpasar",
+      "text": "The document storage service is excellent. Climate controlled and very secure. The staff is professional and helpful. Highly recommend for business needs.",
+      "visible": true
+    },
+    "testi3": {
+      "author": "The Williams Family",
+      "location": "Denpasar",
+      "text": "We needed to store our furniture for a few months and Storapedia provided the perfect solution. Clean, spacious units and a very straightforward process.",
+      "visible": true
+    }
+  },
+  "users": {
+    "XM1yxW7ePoO8SrsQ8MrhhpKTw4P2": {
+      "createdAt": 1754019899311,
+      "email": "jamal.rc2@gmail.com",
+      "name": "Jamal Abdullah",
+      "phone": ""
+    },
+    "bDngIKvBJ7bTrB4z3b5AsOAIsO92": {
+      "createdAt": 1754012249525,
+      "email": "grivieindonesia@gmail.com",
+      "name": "Grivie Indonesia",
+      "phone": ""
+    },
+    "o8cZUnlmRmRvRlF7h5BPbA0kNaj1": {
+      "createdAt": 1754010889613,
+      "email": "jmal.rc2@gmail.com",
+      "name": "Jamal Abdullah",
+      "phone": ""
+    },
+    "qoZNHrx5lcNJbvhXGlOrawvndyE2": {
+      "createdAt": 1754019471316,
+      "email": "storapedia@gmail.com",
+      "name": "storapedia indonesia",
+      "phone": ""
+    },
+    "user_01_uid": {
+      "createdAt": 1753993200000,
+      "email": "alex.j@example.com",
+      "name": "Alex Johnson",
+      "phone": "+1234567890"
+    }
+  },
+  "vouchers": {
+    "voucher1": {
+      "active": true,
+      "code": "FIRSTSTOR",
+      "discount_percent": 15,
+      "imageUrl": "https://images.unsplash.com/photo-1571522851352-a630a11335a4?q=80&w=2070&auto=format&fit=crop"
+    },
+    "voucher2": {
+      "active": true,
+      "code": "HOLIDAY20",
+      "discount_percent": 20,
+      "imageUrl": "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=2070&auto=format&fit=crop"
+    }
+  }
+}

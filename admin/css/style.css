@@ -1,0 +1,1045 @@
+/* Custom CSS Variables - Modern & Vibrant Palette */
+:root {
+    --primary-50: #e0f2fe; /* Light Blue */
+    --primary-100: #bae6fd; /* Lighter Blue */
+    --primary-200: #7dd3fc; /* Light-Medium Blue */
+    --primary-500: #0ea5e9; /* Main Blue */
+    --primary-600: #0284c7; /* Darker Blue */
+    --primary-700: #0369a1; /* Even Darker Blue */
+
+    --secondary-50: #fef3c7; /* Light Amber for accents/warnings */
+    --secondary-100: #fde68a; /* Lighter Amber */
+    --secondary-500: #f59e0b; /* Main Amber (Yellow-Orange) */
+    --secondary-600: #d97706; /* Darker Amber */
+
+    --success-50: #dcfce7; /* Light Green */
+    --success-500: #22c55e; /* Main Green */
+    --success-600: #16a34a; /* Darker Green */
+
+    --danger-50: #fee2e2; /* Light Red */
+    --danger-500: #ef4444; /* Main Red */
+    --danger-600: #dc2626; /* Darker Red */
+
+    --info-50: #e0f7fa; /* Light Cyan/Aqua */
+    --info-500: #00bcd4; /* Main Cyan/Aqua */
+
+    --neutral-50: #f9fafb; /* Off-white for backgrounds */
+    --neutral-100: #f3f4f6; /* Light gray for subtle elements */
+    --neutral-200: #e5e7eb; /* Medium light gray */
+    --neutral-300: #d1d5db; /* Border color */
+    --neutral-400: #9ca3af; /* Icon/text muted */
+    --neutral-500: #6b7280; /* Standard text */
+    --neutral-700: #374151; /* Darker text */
+    --neutral-800: #1f2937; /* Even darker text */
+    --neutral-900: #111827; /* Very dark for sidebar/deep elements */
+
+    --border-radius-base: 0.5rem; /* 8px */
+    --border-radius-lg: 0.75rem; /* 12px */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--neutral-100);
+    color: var(--neutral-800);
+}
+
+/* Sidebar Styling */
+.sidebar {
+    background-color: var(--neutral-900);
+    color: var(--neutral-300);
+    border-top-right-radius: var(--border-radius-lg);
+    border-bottom-right-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden; /* Ensures rounded corners are visible */
+}
+
+.sidebar-link {
+    color: var(--neutral-300);
+    transition: all 0.2s ease-in-out;
+    border-radius: var(--border-radius-base);
+    margin: 0.25rem 0.5rem; /* Add some margin around links */
+    padding-left: 1.5rem; /* Adjust padding for visual balance */
+}
+
+.sidebar-link:hover {
+    background-color: var(--neutral-800);
+    color: white;
+}
+
+.sidebar-link.active {
+    background-color: var(--primary-600);
+    color: white;
+    font-weight: 600;
+    box-shadow: var(--shadow-sm); /* Subtle shadow for active state */
+}
+
+.sidebar h1 {
+    color: white;
+}
+
+.sidebar-badge {
+    background-color: var(--danger-500);
+    color: white;
+    border-radius: 9999px; /* Fully rounded */
+    padding: 0.25rem 0.6rem; /* Adjust padding */
+    font-size: 0.7rem;
+    font-weight: bold;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    min-width: 24px; /* Ensure it's a circle even with single digit */
+    text-align: center;
+}
+
+/* Styling for the notification badge on the bell icon */
+#notification-count.notification-badge {
+    position: absolute;
+    top: -8px; /* Sesuaikan posisi vertikal agar berada di sudut atas ikon */
+    right: -8px; /* Sesuaikan posisi horizontal agar berada di sudut kanan ikon */
+    background-color: var(--danger-500); /* Warna merah dari variabel CSS */
+    color: white; /* Warna teks putih */
+    border-radius: 9999px; /* Membuat bentuk lingkaran penuh */
+    padding: 0.1rem 0.4rem; /* Padding lebih kecil untuk tampilan ringkas */
+    font-size: 0.65rem; /* Ukuran font lebih kecil */
+    font-weight: bold; /* Teks tebal */
+    line-height: 1; /* Pastikan teks terpusat secara vertikal */
+    min-width: 18px; /* Lebar minimum untuk memastikan bentuk lingkaran */
+    height: 18px; /* Tinggi yang sama dengan min-width untuk lingkaran sempurna */
+    display: flex; /* Menggunakan flexbox untuk memusatkan angka */
+    align-items: center; /* Pusatkan secara vertikal */
+    justify-content: center; /* Pusatkan secara horizontal */
+    transform: translate(0, 0); /* Mengatur ulang transform yang mungkin diwarisi */
+    box-shadow: 0 0 0 2px white; /* Bayangan putih kecil untuk kontras */
+}
+/* Admin Page Transitions */
+.admin-page {
+    display: none;
+}
+
+.admin-page.active {
+    display: block;
+    animation: fadeInSlideUp 0.6s ease-out forwards; /* More refined animation */
+}
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header Styling */
+header {
+    background-color: white;
+    border-bottom: 1px solid var(--neutral-200);
+    box-shadow: var(--shadow-sm);
+    border-bottom-left-radius: var(--border-radius-lg);
+    border-bottom-right-radius: var(--border-radius-lg);
+    padding: 1rem 1.5rem; /* Increase padding */
+    margin-bottom: 1.5rem; /* Add space below header */
+}
+
+header #page-title {
+    font-size: 1.75rem; /* text-3xl but slightly smaller for balance */
+    color: var(--neutral-700);
+}
+
+/* Stat Cards */
+.stat-card {
+    background-color: white;
+    padding: 1.5rem; /* Increased padding */
+    border-radius: var(--border-radius-lg); /* Larger border radius */
+    box-shadow: var(--shadow-md); /* More pronounced shadow */
+    border-left: 5px solid; /* Thicker border for visual emphasis */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-8px); /* More noticeable lift */
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-card .text-sm {
+    color: var(--neutral-500);
+    font-weight: 500;
+}
+
+.stat-card .text-3xl {
+    color: var(--neutral-800);
+    font-weight: 700;
+}
+
+.stat-card div[class^="bg-"] { /* Targeting the icon background */
+    width: 3.5rem; /* Larger icon circle */
+    height: 3.5rem;
+    border-radius: 9999px; /* Full circle */
+    font-size: 1.5rem;
+}
+
+.stat-card.border-blue-500 { border-color: var(--primary-500); }
+.stat-card.border-green-500 { border-color: var(--success-500); }
+.stat-card.border-yellow-500 { border-color: var(--secondary-500); }
+.stat-card.border-purple-500 { border-color: #8b5cf6; /* Specific purple for capacity */ }
+
+.stat-view-btn {
+    cursor: pointer;
+    color: var(--neutral-400);
+    transition: color 0.2s ease;
+}
+
+.stat-view-btn:hover {
+    color: var(--primary-500);
+}
+
+/* Input Fields, Textareas, and Selects */
+.input-field,
+.textarea-field,
+.select-field {
+    width: 100%;
+    padding: 0.85rem 1.1rem; /* Slightly more padding */
+    border: 1px solid var(--neutral-300);
+    border-radius: var(--border-radius-base);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03); /* Inner shadow for depth */
+    transition: all 0.25s ease-in-out;
+    outline: none;
+    background-color: white; /* Explicitly white background */
+    color: var(--neutral-800);
+    font-size: 1rem;
+}
+
+.input-field::placeholder,
+.textarea-field::placeholder {
+    color: var(--neutral-400);
+}
+
+.input-field:focus,
+.textarea-field:focus,
+.select-field:focus {
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 3px var(--primary-100);
+}
+
+.textarea-field {
+    min-height: 100px; /* Slightly taller default */
+    resize: vertical;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.9rem; /* Slightly larger label text */
+    font-weight: 600; /* Bolder labels */
+    color: var(--neutral-700);
+    margin-bottom: 0.4rem; /* More space below labels */
+}
+
+/* General Button Styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.6rem; /* Increased padding */
+    font-size: 0.95rem; /* Slightly smaller for compactness */
+    font-weight: 600;
+    border-radius: var(--border-radius-base); /* Consistent border-radius */
+    transition: all 0.25s ease-in-out;
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-decoration: none; /* Ensure no underline for anchor buttons */
+}
+
+.btn i {
+    margin-right: 0.5rem; /* Space between icon and text */
+}
+
+.btn-primary {
+    background-color: var(--primary-600);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-700);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background-color: var(--success-500);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-success:hover {
+    background-color: var(--success-600);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background-color: var(--danger-500);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-600);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: white;
+    color: var(--neutral-700);
+    border-color: var(--neutral-300);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover {
+    background-color: var(--neutral-50);
+    border-color: var(--neutral-400);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* Table Styling */
+.table-auto {
+    width: 100%;
+    border-collapse: separate; /* Use separate for rounded corners on cells */
+    border-spacing: 0; /* Remove default spacing */
+    border-radius: var(--border-radius-lg); /* Apply to the whole table */
+    overflow: hidden; /* Ensure content respects border-radius */
+    box-shadow: var(--shadow-md);
+}
+
+.table-header {
+    background-color: var(--neutral-50); /* Lighter header background */
+    color: var(--neutral-600);
+    text-transform: uppercase;
+    font-size: 0.8rem; /* Slightly larger text */
+    font-weight: 700; /* Bolder */
+    letter-spacing: 0.08em; /* More tracking */
+    border-bottom: 2px solid var(--neutral-200);
+}
+
+.table-header th {
+    padding: 1.2rem 1.5rem; /* Increased padding */
+    text-align: left;
+    white-space: nowrap; /* Prevent wrapping on headers */
+    /* Add min-width to prevent shrinking on sparse data */
+    min-width: 120px; /* Default minimum width for columns */
+}
+/* Specific min-widths for certain columns if needed */
+.table-header th:nth-child(2) { /* Booking Details or Email */
+    min-width: 180px;
+}
+.table-header th:nth-child(3) { /* Dates or Phone */
+    min-width: 150px;
+}
+.table-header th:last-child { /* Actions column */
+    min-width: 100px;
+}
+
+
+.table-body tr {
+    background-color: white;
+    border-bottom: 1px solid var(--neutral-200);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.table-body tr:last-child {
+    border-bottom: none;
+}
+
+.table-body tr:hover {
+    background-color: var(--neutral-50);
+    transform: translateX(2px); /* Slight horizontal shift on hover */
+}
+
+.table-body td {
+    padding: 1rem 1.5rem;
+    color: var(--neutral-700);
+    font-size: 0.9rem;
+}
+
+
+
+
+/* Custom Styles for Edit Booking Modal (All CSS Implementation) */
+
+/* Ensure global box-sizing for consistent layout */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Modal Backdrop (Overlay) */
+.edit-booking-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Translucent black overlay */
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    z-index: 151; /* High z-index to appear on top */
+}
+
+/* Modal Content Box */
+.edit-booking-modal-content {
+    background-color: white;
+    border-radius: var(--border-radius-lg); /* Use custom variable for rounded corners */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Soft shadow */
+    position: relative; /* For positioning close button */
+    display: flex; /* Enable flexbox for internal layout */
+    flex-direction: column; /* Stack header, form, and footer vertically */
+
+    /* Mobile Styles (Default) */
+    width: 90%; /* Take 90% width of the viewport */
+    max-height: 95vh; /* Max height 95% of viewport height */
+    padding: 1rem; /* Internal padding for content */
+    box-sizing: border-box; /* Ensure padding is included in width/height */
+    /* overflow: hidden; /* Prevent initial overflow on content before form scroll */
+    min-width: 0; /* Allow shrinking in flex context */
+    min-height: 0; /* Allow shrinking in flex context */
+}
+
+/* Desktop Styles (min-width: 768px, equivalent to Tailwind's md breakpoint) */
+@media (min-width: 768px) {
+    .edit-booking-modal-content {
+        max-width: 48rem; /* Equivalent to Tailwind's md:max-w-3xl (768px) */
+        width: 100%; /* Take full width up to max-width */
+        padding: 1.5rem; /* Larger padding for desktop */
+    }
+}
+
+/* Modal Close Button */
+.edit-booking-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    color: var(--neutral-400); /* Gray color */
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.edit-booking-close-btn:hover {
+    color: var(--neutral-800); /* Darker gray on hover */
+}
+
+/* Modal Title */
+.edit-booking-title {
+    font-size: 2rem; /* h3 size */
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--neutral-800);
+}
+
+/* Form Container */
+.edit-booking-form {
+    display: flex; /* Enable flexbox for form sections */
+    flex-direction: column; /* Stack form sections vertically */
+    gap: 1.5rem; /* Space between sections (space-y-6) */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    flex-grow: 1; /* Allow form to take available vertical space */
+    padding-bottom: 1rem; /* Padding at the bottom of the scrollable form */
+    min-width: 0; /* Allow form to shrink */
+    min-height: 0; /* Allow form to shrink */
+}
+
+/* Form Sections (Customer Details, Booking Details, etc.) */
+.edit-booking-section {
+    padding: 1rem; /* Internal padding for section */
+    border-radius: var(--border-radius-base); /* Rounded corners */
+    border: 1px solid var(--neutral-200); /* Subtle border */
+    box-sizing: border-box; /* Include padding/border in element's total size */
+}
+
+/* Background colors for sections (mimicking Tailwind's bg-gray-50 / bg-white) */
+.edit-booking-section.section-bg-1 { /* For odd sections */
+    background-color: var(--neutral-50);
+}
+.edit-booking-section.section-bg-2 { /* For even sections */
+    background-color: white;
+}
+
+.edit-booking-section-title {
+    font-size: 1.125rem; /* h4 size */
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--neutral-800);
+}
+
+/* Grid Layout for Form Fields within sections */
+.edit-booking-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr; /* Default: single column for mobile */
+    gap: 1rem; /* Gap between grid items */
+}
+
+/* Desktop Grid Layouts */
+@media (min-width: 768px) {
+    .edit-booking-grid-layout.grid-cols-desktop-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 columns on desktop */
+    }
+    .edit-booking-grid-layout.grid-cols-desktop-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 columns on desktop */
+    }
+}
+
+/* Specific styles for disabled inputs (used on read-only fields) */
+.input-field.disabled-field {
+    background-color: var(--neutral-100);
+    cursor: not-allowed;
+}
+
+/* Seal Photo Area */
+.seal-photo-area {
+    margin-top: 1rem;
+}
+.seal-photo-preview {
+    margin-top: 0.5rem;
+    width: 8rem;
+    height: 8rem;
+    background-color: var(--neutral-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--neutral-400);
+    border-radius: var(--border-radius-base);
+    overflow: hidden;
+    border: 1px solid var(--neutral-300);
+}
+.seal-photo-preview i {
+    font-size: 2.5rem;
+}
+.seal-photo-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+/* Modal Footer (for Save Changes button) */
+.edit-booking-footer {
+    margin-top: 1.5rem; /* Space above footer */
+    padding-top: 1rem; /* Padding at top of footer */
+    border-top: 1px solid var(--neutral-200); /* Top border */
+    background-color: white; /* Ensure consistent background */
+    
+    /* Responsive padding for footer based on screen size */
+    padding-left: 0;
+    padding-right: 0;
+}
+@media (max-width: 767px) { /* Mobile padding (sm:p-2) */
+    .edit-booking-footer {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
+@media (min-width: 768px) { /* Desktop padding (md:p-0) */
+    .edit-booking-footer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+/* Full Width Button for Footer */
+.btn-full-width {
+    width: 100%; /* Make button full width */
+}
+
+/* Ensure global HTML/BODY are set up correctly for vh units */
+html, body {
+    height: 100%; /* Crucial for max-height: 95vh to work consistently */
+    margin: 0;
+    padding: 0;
+    /* overflow: hidden; /* Consider adding this to body if you want to prevent main page scroll when modal is open */
+}
+
+/* Modal Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Darker overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000; /* Higher z-index to ensure it's on top */
+    padding: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.modal-overlay.visible { /* Using 'visible' class as per your JS logic */
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: white;
+    width: 100%;
+    max-width: 600px; /* Max width for consistency */
+    padding: 2.5rem; /* More generous padding */
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35); /* Deeper shadow */
+    position: relative;
+    transform: scale(0.9); /* Start smaller for a pop effect */
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Springy effect */
+}
+
+.modal-overlay.visible .modal-content {
+    transform: scale(1);
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    font-size: 2.2rem; /* Larger close button */
+    color: var(--neutral-400);
+    line-height: 1;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.1s ease;
+    padding: 0; /* Remove default button padding */
+}
+
+.modal-close-btn:hover {
+    color: var(--danger-500); /* Red on hover */
+    transform: rotate(90deg); /* Rotate effect on hover */
+}
+
+
+/* SweetAlert2 Overrides */
+.swal2-popup {
+    font-family: 'Inter', sans-serif;
+    z-index: 2001 !important; /* Ensure it's above modals */
+    border-radius: var(--border-radius-lg) !important;
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.swal2-input,
+.swal2-textarea,
+.swal2-file,
+.swal2-select {
+    width: calc(100% - 2em) !important;
+    margin: 1em auto 0 !important;
+    padding: 0.85rem 1.1rem !important;
+    border: 1px solid var(--neutral-300) !important;
+    border-radius: var(--border-radius-base) !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+    transition: all 0.25s ease-in-out !important;
+    outline: none !important;
+}
+
+.swal2-input:focus,
+.swal2-textarea:focus,
+.swal2-file:focus,
+.swal2-select:focus {
+    border-color: var(--primary-500) !important;
+    box-shadow: 0 0 0 3px var(--primary-100) !important;
+}
+
+.swal2-styled.swal2-confirm {
+    background-color: var(--primary-600) !important;
+    border: none !important;
+    box-shadow: var(--shadow-sm) !important;
+}
+.swal2-styled.swal2-confirm:hover {
+    background-color: var(--primary-700) !important;
+}
+.swal2-styled.swal2-confirm:focus {
+    box-shadow: 0 0 0 3px var(--primary-100) !important;
+}
+.swal2-styled.swal2-cancel {
+    background-color: var(--neutral-200) !important;
+    color: var(--neutral-700) !important;
+    border: none !important;
+    box-shadow: var(--shadow-sm) !important;
+}
+.swal2-styled.swal2-cancel:hover {
+    background-color: var(--neutral-300) !important;
+}
+.swal2-styled.swal2-cancel:focus {
+    box-shadow: 0 0 0 3px var(--neutral-100) !important;
+}
+
+
+/* Google Maps Autocomplete Container */
+.pac-container {
+    z-index: 2002 !important; /* Higher than SweetAlert2 if needed for map modals */
+    border-radius: var(--border-radius-base);
+    box-shadow: var(--shadow-md);
+    font-family: 'Inter', sans-serif;
+}
+
+/* Chat Styling (Inbox) */
+.chat-bubble-sent {
+    background-color: var(--primary-600);
+    color: white;
+    border-radius: var(--border-radius-base) var(--border-radius-base) 0 var(--border-radius-base); /* Top-left, Top-right, Bottom-left, Bottom-right */
+    padding: 0.75rem 1rem;
+    max-width: 80%;
+    align-self: flex-end; /* Sent messages align right */
+}
+
+.chat-bubble-received {
+    background-color: var(--neutral-200);
+    color: var(--neutral-800);
+    border-radius: var(--border-radius-base) var(--border-radius-base) var(--border-radius-base) 0;
+    padding: 0.75rem 1rem;
+    max-width: 80%;
+    align-self: flex-start; /* Received messages align left */
+}
+
+#chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.conversation-item {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--neutral-200);
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.conversation-item:hover {
+    background-color: var(--neutral-50);
+}
+
+.conversation-item.active {
+    background-color: var(--primary-50);
+    border-left: 4px solid var(--primary-500);
+    padding-left: calc(1rem - 4px); /* Adjust padding for border */
+    font-weight: 500;
+}
+
+.inbox-filter-btn {
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--border-radius-base);
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.inbox-filter-btn.bg-primary-600 {
+    background-color: var(--primary-600);
+    color: white;
+}
+.inbox-filter-btn.bg-primary-600:hover {
+    background-color: var(--primary-700);
+}
+
+.inbox-filter-btn.bg-gray-200 { /* Renamed to neutral-200 if you use the new vars */
+    background-color: var(--neutral-200);
+    color: var(--neutral-700);
+}
+.inbox-filter-btn.bg-gray-200:hover { /* Renamed to neutral-300 if you use the new vars */
+    background-color: var(--neutral-300);
+}
+
+
+/* Pricing Scheme Container (Locations) */
+.pricing-scheme-container {
+    max-height: 450px; /* Slightly more height */
+    overflow-y: auto;
+    padding-right: 15px; /* More space for scrollbar */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: var(--neutral-400) var(--neutral-100); /* Firefox */
+}
+/* Webkit (Chrome, Safari) scrollbar styling */
+.pricing-scheme-container::-webkit-scrollbar {
+    width: 8px;
+}
+.pricing-scheme-container::-webkit-scrollbar-track {
+    background: var(--neutral-100);
+    border-radius: 10px;
+}
+.pricing-scheme-container::-webkit-scrollbar-thumb {
+    background-color: var(--neutral-300);
+    border-radius: 10px;
+    border: 2px solid var(--neutral-100);
+}
+
+.storage-type-group {
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--border-radius-base);
+    padding: 1.25rem; /* More padding */
+    margin-bottom: 1.25rem;
+    background-color: var(--neutral-50); /* Soft background */
+    box-shadow: var(--shadow-sm);
+}
+
+.storage-type-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* More space */
+    margin-bottom: 1rem;
+    font-size: 1.1rem; /* Slightly larger header text */
+    font-weight: 600;
+    color: var(--neutral-700);
+}
+
+.rate-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 24px; /* Maintain layout */
+    gap: 0.75rem; /* More gap */
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.rate-row input {
+    padding: 0.5rem 0.75rem; /* Adjust input padding */
+    border-radius: var(--border-radius-base);
+    border: 1px solid var(--neutral-200);
+    background-color: white;
+}
+
+.remove-btn {
+    color: var(--danger-500);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem; /* Larger icon */
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.remove-btn:hover {
+    color: var(--danger-600);
+    transform: scale(1.1);
+}
+
+/* Review and Testimonial Cards */
+.review-card,
+.testimonial-card {
+    background-color: white;
+    padding: 1.25rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.25s ease-in-out;
+    border: 1px solid var(--neutral-200);
+}
+
+.review-card:hover,
+.testimonial-card:hover {
+    transform: translateY(-4px); /* More pronounced lift */
+    box-shadow: var(--shadow-md);
+}
+
+/* Utility Classes for Tailwind Overrides */
+.md\:rounded-lg-card {
+    border-radius: var(--border-radius-lg) !important;
+}
+
+.md\:shadow-lg-sidebar {
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.rounded-base {
+    border-radius: var(--border-radius-base) !important;
+}
+
+/* Custom styles for mobile view (max-width: 767px) */
+@media (max-width: 767px) {
+    main {
+        padding: 1rem;
+    }
+
+    #sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 250px; /* Slightly wider sidebar on mobile */
+        z-index: 100;
+        transform: translateX(-100%);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* Stronger shadow */
+    }
+
+    #sidebar.active {
+        transform: translateX(0);
+    }
+
+    header {
+        padding: 0.8rem 1rem;
+        border-radius: var(--border-radius-base); /* Smaller border radius for mobile header */
+        margin: 0.75rem; /* Consistent margin */
+    }
+
+    #admin-user-info {
+        display: none !important;
+    }
+
+    #page-title {
+        text-align: left;
+        font-size: 1.5rem; /* Smaller title on mobile */
+    }
+
+    /* Force cards to display on mobile for md:hidden elements */
+    .admin-page .md\:hidden {
+        display: block !important;
+    }
+
+    /* Styling for mobile cards for lists */
+    .data-card {
+        background-color: white;
+        padding: 1.2rem; /* More padding */
+        border-radius: var(--border-radius-base);
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem; /* Slightly more gap */
+        border: 1px solid var(--neutral-200); /* Subtle border */
+    }
+
+    .data-card .card-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start; /* Align items to start */
+        padding: 0.35rem 0;
+        border-bottom: 1px dashed var(--neutral-100); /* Lighter dashed border */
+    }
+
+    .data-card .card-row:last-child {
+        border-bottom: none;
+    }
+
+    .data-card .card-label {
+        font-weight: 600; /* Bolder labels */
+        color: var(--neutral-600);
+        width: 45%; /* Give labels more space */
+        flex-shrink: 0; /* Prevent label from shrinking */
+    }
+
+    .data-card .card-value {
+        text-align: right;
+        flex-grow: 1;
+        color: var(--neutral-800);
+        font-size: 0.9rem;
+    }
+
+    .data-card .card-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.8rem; /* More gap for buttons */
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--neutral-100);
+        margin-top: 0.75rem;
+    }
+
+    .data-card .card-actions button {
+        padding: 0.6rem 1rem; /* Adjust button padding */
+        border-radius: var(--border-radius-base);
+        font-size: 0.8rem;
+    }
+
+    /* Specific adjustments for inbox/chat on mobile */
+    #page-inbox .w-full.md\:w-1\/3,
+    #page-inbox .w-full.md\:w-2\/3 {
+        width: 100% !important; /* Ensure full width on mobile */
+        min-height: auto; /* Allow height to adjust */
+    }
+
+    #page-inbox .border-r {
+        border-right: none;
+        border-bottom: 1px solid var(--neutral-200);
+    }
+
+    #page-inbox .flex-col.md\:flex-row {
+        flex-direction: column;
+    }
+
+    #page-inbox .h-\[calc\(100vh-10rem\)\] {
+        height: auto; /* Remove fixed height on mobile */
+        min-height: 70vh; /* Allow it to take up a good portion of the screen */
+    }
+
+    #page-inbox #conversations-list {
+        max-height: 40vh; /* Limit height of conversation list */
+        overflow-y: auto;
+    }
+
+    #page-inbox #chat-window {
+        min-height: 50vh; /* Ensure chat window is tall enough */
+    }
+
+    /* New styles for WhatsApp-like mobile inbox view */
+    #conversations-panel.hidden-mobile {
+        display: none !important;
+    }
+    #chat-panel.show-mobile {
+        display: flex !important; /* Override 'hidden' for mobile when active */
+    }
+}
+
+/* Ensure sidebar displays on desktop */
+@media (min-width: 768px) { /* md breakpoint in Tailwind */
+    #sidebar {
+        display: flex !important;
+        transform: translateX(0) !important;
+        position: relative !important;
+        box-shadow: none !important;
+    }
+
+    /* Ensure desktop tables are shown and mobile cards are hidden on desktop */
+    .admin-page .overflow-x-auto.hidden.md\:table {
+        display: table !important;
+    }
+
+    .admin-page .md\:hidden {
+        display: none !important;
+    }
+
+    .admin-main-content > header {
+        border-top-left-radius: var(--border-radius-lg);
+        border-top-right-radius: var(--border-radius-lg);
+        margin-right: 1.5rem; /* Align with content padding */
+        margin-top: 1.5rem;
+        margin-left: 0;
+    }
+
+    .admin-main-content > .flex-1 {
+        padding: 1.5rem; /* Consistent padding */
+    }
+}
+
+#qr-scanner-popup {
+    position: fixed; /* Penting: agar pop-up diposisikan relatif terhadap viewport */
+    top: 50%;        /* Pindahkan bagian atas elemen ke tengah viewport */
+    left: 50%;       /* Pindahkan bagian kiri elemen ke tengah viewport */
+    transform: translate(-50%, -50%); /* Pindahkan elemen kembali setengah dari lebarnya/tingginya sendiri */
+    z-index: 60;     /* Pastikan ini lebih tinggi dari backdrop (z-50) */
+    /* Kelas Tailwind lainnya seperti bg-white w-full max-w-lg p-6 rounded-xl shadow-2xl relative */
+}
+
+/* Pastikan backdrop menutupi seluruh layar */
+#qr-scanner-modal-backdrop {
+    display: none; /* Sembunyikan secara default */
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Latar belakang hitam transparan */
+    z-index: 50; /* Di bawah pop-up utama */
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
